@@ -262,7 +262,7 @@ Review and update this threat model:
 ## References
 
 - [Security Policy](../../SECURITY.md)
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)
 - [TLCore System Overview](../architecture/SYSTEM_OVERVIEW.md)
 - [ADR-0001: Use separate repositories for independently deployable applications](../adr/0001-multi-repository-strategy.md)
 - [ADR-0002: Begin with an event-driven polyglot architecture](../adr/0002-initial-event-driven-architecture.md)

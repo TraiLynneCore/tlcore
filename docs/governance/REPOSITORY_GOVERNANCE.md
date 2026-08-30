@@ -296,7 +296,7 @@ Review this policy:
 
 ## References
 
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)
 - [ADR-0001: Use separate repositories for independently deployable applications](../adr/0001-multi-repository-strategy.md)
 - [Cost and Credential Policy](COST_AND_CREDENTIALS.md)
 - [Security Policy](../../SECURITY.md)

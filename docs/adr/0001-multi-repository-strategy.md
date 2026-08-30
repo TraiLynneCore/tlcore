@@ -164,4 +164,4 @@ If the strategy changes, create a new ADR that supersedes this record rather tha
 ## References
 
 - [The Twelve-Factor App: Codebase](https://12factor.net/codebase)
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)

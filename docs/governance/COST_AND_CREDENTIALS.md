@@ -297,4 +297,4 @@ Review this policy:
 
 - [TLCore Security Policy](../../SECURITY.md)
 - [TLCore Initial Threat Model](../security/THREAT_MODEL.md)
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)

@@ -81,4 +81,4 @@ An ADR is not proof that a decision is permanent. It is evidence that the decisi
 
 - [Repository Governance](../governance/REPOSITORY_GOVERNANCE.md)
 - [TLCore System Overview](../architecture/SYSTEM_OVERVIEW.md)
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)

@@ -226,6 +226,6 @@ If the architecture changes, create a new ADR that supersedes this record rather
 
 ## References
 
-- [TLCore 2.0 Project Charter](../PROJECT_CHARTER.md)
+- [TLCore Project Charter](../PROJECT_CHARTER.md)
 - [ADR-0001: Use separate repositories for independently deployable applications](0001-multi-repository-strategy.md)
 - [The Twelve-Factor App](https://12factor.net/)

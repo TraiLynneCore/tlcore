@@ -1,8 +1,8 @@
-# TLCore 2.0 Roadmap
+# TLCore Roadmap
 
 ## Project vision
 
-TLCore 2.0 is a long-lived DevOps, platform engineering, SRE, cloud, and security laboratory.
+TLCore is a long-lived DevOps, platform engineering, SRE, cloud, and security laboratory.
 
 It consists of a small but realistic polyglot distributed application supported by production-style infrastructure and operational practices. The application will remain intentionally focused so that most engineering effort goes toward deploying, securing, observing, troubleshooting, and evolving the system.
 

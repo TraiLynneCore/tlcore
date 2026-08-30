@@ -1,4 +1,4 @@
-# TLCore 2.0 Project Charter
+# TLCore Project Charter
 
 - **Status:** Approved
 - **Project owner:** Trai Lynne Compton
@@ -6,7 +6,7 @@
 
 ## Purpose
 
-TLCore 2.0 is a long-lived engineering laboratory for developing practical skills in DevOps, platform engineering, site reliability engineering, cloud infrastructure, and security.
+TLCore is a long-lived engineering laboratory for developing practical skills in DevOps, platform engineering, site reliability engineering, cloud infrastructure, and security.
 
 The project centers on a small but realistic polyglot distributed application. The application provides a consistent system through which deployment, automation, observability, reliability, security, troubleshooting, and infrastructure practices can be learned and demonstrated.
 
