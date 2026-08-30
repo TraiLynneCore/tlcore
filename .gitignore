@@ -1,0 +1,63 @@
+# Local environment configuration
+.env
+.env.*
+!.env.example
+
+# Credentials and private key material
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Terraform local state and overrides
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# Test and coverage output
+coverage/
+.nyc_output/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Build and dependency output
+node_modules/
+dist/
+build/
+vendor/bundle/
+.bundle/
+__pycache__/
+*.py[cod]
+
+# Editors
+.idea/
+.vscode/
+
+# Operating systems
+.DS_Store
+Thumbs.db
