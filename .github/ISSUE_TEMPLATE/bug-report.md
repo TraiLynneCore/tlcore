@@ -14,6 +14,12 @@ personal information, private device data, and other sensitive material from
 logs, screenshots, event payloads, and configuration before submitting.
 -->
 
+<!--
+This template is a guide, not a requirement to fill every section.
+Remove sections, fields, and checklist items that do not apply.
+Do not add speculative requirements only to complete the template.
+-->
+
 ## Summary
 
 Briefly describe the problem and its impact.

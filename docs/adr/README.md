@@ -1,84 +1,60 @@
 # Architecture Decision Records
 
-Architecture Decision Records preserve important TLCore decisions and the reasoning behind them.
+Architecture Decision Records (ADRs) explain important technical choices, the options considered, and the reasoning behind the final decision.
 
-Code shows what the system does. ADRs explain why the project chose a particular direction, which alternatives were considered, and when the decision should be revisited.
+ADRs are part of TLCore's learning record. They show how the project changed over time and make it possible to revisit a decision with its original context.
 
 ## Decision index
 
-| ADR                                               | Decision                                                            | Status   |
-| ------------------------------------------------- | ------------------------------------------------------------------- | -------- |
-| [0001](0001-multi-repository-strategy.md)         | Use separate repositories for independently deployable applications | Accepted |
-| [0002](0002-initial-event-driven-architecture.md) | Begin with an event-driven polyglot architecture                    | Accepted |
+| ADR | Decision | Status |
+| --- | --- | --- |
+| [0001](0001-multi-repository-strategy.md) | Use separate repositories for independently deployable applications | Accepted |
+| [0002](0002-initial-event-driven-architecture.md) | Begin with an event-driven polyglot architecture | Accepted |
 
-## Status values
+## When to write an ADR
 
-- **Proposed:** The decision is under discussion and has not been approved.
+Create an ADR when a decision is important and would be difficult or disruptive to reverse. Examples include:
+
+- Changing application or repository boundaries.
+- Selecting a foundational database, broker, platform, or external service.
+- Defining data ownership or communication patterns.
+- Making a significant security, cost, or deployment commitment.
+- Establishing a convention that affects several repositories.
+
+Do not create an ADR for routine implementation details, small refactors, or choices that are easy to change.
+
+## Statuses
+
+- **Proposed:** The decision is under consideration.
 - **Accepted:** The decision is approved and guides current work.
-- **Superseded by ADR-NNNN:** A newer ADR replaces the decision.
-- **Deprecated:** The decision is no longer applicable.
-- **Rejected:** The option was considered but not adopted.
-
-## When an ADR is required
-
-Create an ADR when a decision:
-
-- Changes an application or system boundary
-- Selects a foundational technology or managed service
-- Defines data ownership
-- Changes communication or deployment patterns
-- Introduces a significant security or cost commitment
-- Establishes a convention affecting multiple repositories
-- Is difficult or expensive to reverse
-
-Routine implementation choices and small documentation changes do not require ADRs.
+- **Rejected:** The proposal was considered but not chosen.
+- **Superseded:** A newer ADR replaced the decision.
+- **Deprecated:** The decision is no longer recommended but has not been replaced by one specific ADR.
 
 ## Creating an ADR
 
-1. Copy [`0000-template.md`](0000-template.md).
-2. Assign the next available four-digit number.
-3. Use a short, descriptive, lowercase filename.
-4. Begin with the status `Proposed`.
-5. Document the context, decision drivers, credible alternatives, consequences, risks, validation, and revisit conditions.
-6. Review the ADR with the related change.
-7. Change the status to `Accepted` when the decision is approved.
-8. Add the accepted ADR to the decision index.
+1. Copy [0000-template.md](0000-template.md).
+2. Use the next available four-digit number.
+3. Give the file a short descriptive name.
+4. Start with `Proposed` status.
+5. Describe the context, options, decision, tradeoffs, and what was learned.
+6. Link the related issue or pull request when available.
+7. Add the ADR to the decision index after it is accepted.
 
 Example:
 
 ```text
-0003-message-broker-selection.md
+0003-select-message-broker.md
 ```
 
-## Changing a decision
+## Preserving decisions
 
-Accepted ADRs are historical records and should not be silently rewritten to describe a different decision.
+An accepted ADR is a historical record. Do not rewrite it simply because the project later changes direction.
 
 When a decision changes:
 
 1. Create a new ADR explaining the new context and decision.
-2. Identify the previous ADR in the references.
-3. Change the previous ADR’s status to `Superseded by ADR-NNNN`.
-4. Add the new ADR to this index.
+2. Mark the old ADR `Superseded`.
+3. Link the two records.
 
-Minor corrections that do not change the meaning—such as typographical fixes or repaired links—may be made directly to an existing ADR.
-
-## Decision quality
-
-A useful ADR:
-
-- States the problem before the solution
-- Identifies the constraints that matter
-- Compares credible alternatives fairly
-- Records negative consequences as well as benefits
-- Defines how the choice will be validated
-- Explains what evidence should trigger reconsideration
-- Avoids presenting preferences as requirements
-
-An ADR is not proof that a decision is permanent. It is evidence that the decision was made deliberately.
-
-## Related documentation
-
-- [Repository Governance](../governance/REPOSITORY_GOVERNANCE.md)
-- [TLCore System Overview](../architecture/SYSTEM_OVERVIEW.md)
-- [TLCore Project Charter](../PROJECT_CHARTER.md)
+Small corrections that do not change the decision's meaning may be made directly.

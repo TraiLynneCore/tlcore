@@ -6,6 +6,12 @@ labels: ""
 assignees: ""
 ---
 
+<!--
+This template is a guide, not a requirement to fill every section.
+Remove sections, fields, and checklist items that do not apply.
+Do not add speculative requirements only to complete the template.
+-->
+
 ## Context
 
 What is the goal of this work, and why is it needed?

@@ -1,83 +1,49 @@
 # Security Policy
 
-Security is a foundational requirement of TLCore. This policy explains how to report suspected vulnerabilities and how the project handles security information.
+TLCore is a personal learning project under active development. It does not currently have a production release or supported version.
 
-## Supported versions
+## Report a vulnerability
 
-TLCore is currently under active development and has no supported production releases.
+Do not report a suspected vulnerability through a public issue, discussion, or pull request.
 
-Security fixes will initially be applied to the latest version of the default branch. A version-support policy will be introduced when TLCore begins publishing versioned releases.
+Use GitHub's **Report a vulnerability** option in the repository's Security tab. This sends the report privately to the repository owner.
 
-## Reporting a vulnerability
+Include enough information to understand the problem safely:
 
-Do not report suspected vulnerabilities through public GitHub issues, discussions, pull requests, or other public channels.
+- What is affected.
+- How the problem can be reproduced.
+- The possible impact.
+- Sanitized logs or evidence when useful.
+- A suggested fix, if known.
 
-When this repository becomes public, use GitHub's **Report a vulnerability** feature under the repository's Security tab. Reports submitted through that feature are shared privately with the repository owner.
-
-Private vulnerability reporting must be enabled before this repository is made public.
-
-## What to include
-
-Provide enough information to understand and reproduce the issue safely:
-
-- A clear description of the vulnerability
-- The affected component, version, branch, or commit
-- Steps to reproduce the issue
-- The potential security impact
-- Any relevant sanitized logs or evidence
-- A suggested mitigation, if known
+## Protect sensitive information
 
 Do not include:
 
-- Active credentials, tokens, private keys, or session data
-- Unnecessary personal information
-- Real private-device data
-- Data belonging to another person or system
-- Destructive proof-of-concept activity
+- Passwords, tokens, API keys, private keys, or session data.
+- Connection strings containing credentials.
+- Personal information or real private-device data.
+- Sensitive logs, screenshots, configuration, or environment files.
+- Destructive proof-of-concept activity.
 
-Use demonstration values and the minimum access necessary to confirm the issue.
+Use demonstration values and simulated data whenever possible.
 
-## Response expectations
+## Exposed credentials
 
-The project aims to:
+Treat an exposed credential as compromised even if it was committed briefly or the repository was private.
 
-- Acknowledge a report within three business days
-- Complete an initial assessment within seven business days
-- Communicate whether the report was accepted, requires more information, or is not considered a vulnerability
-- Provide remediation or mitigation expectations after the initial assessment
-- Coordinate public disclosure when disclosure is appropriate
+If a credential is exposed:
 
-These targets may evolve as the project and maintainer team grow.
+1. Revoke or rotate it immediately.
+2. Check available logs for unexpected use.
+3. Remove it from active project files and history when appropriate.
+4. Fix the process that allowed the exposure.
+5. Record the lesson without reproducing the secret.
 
-## Coordinated disclosure
+Deleting a commit does not make an exposed credential safe again.
 
-Please allow reasonable time for investigation and remediation before publicly disclosing a vulnerability.
+## Current scope
 
-When appropriate, TLCore will:
+This policy applies to TLCore code, documentation, automation, infrastructure, dependencies, and configuration.
 
-1. Confirm the affected components and versions.
-2. Develop and validate a remediation.
-3. Rotate or revoke exposed credentials immediately.
-4. Document the security impact and required user actions.
-5. Publish a security advisory after a fix or mitigation is available.
-6. Credit the reporter unless they prefer to remain anonymous.
-
-## Security incidents
-
-If a credential or sensitive value is committed, it must be treated as compromised even if the commit is quickly removed or the repository is private.
-
-The response should include:
-
-1. Revoke or rotate the exposed value.
-2. Review available logs for unauthorized use.
-3. Remove the value from active project files and history where appropriate.
-4. Correct the process that allowed the exposure.
-5. Document lessons learned without reproducing the secret.
-
-Deleting a Git commit alone does not make an exposed credential safe again.
-
-## Scope
-
-This policy applies to TLCore source code, automation, infrastructure definitions, deployment configuration, dependencies, and documented operational processes.
-
-Security concerns in third-party products should also be reported to the affected product's maintainer when appropriate.
+Security practices will grow with the working system. A more detailed threat model will be added when implemented behavior and real trust boundaries exist to evaluate.

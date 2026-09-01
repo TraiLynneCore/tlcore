@@ -2,78 +2,54 @@
 
 - **Status:** Proposed
 - **Date:** YYYY-MM-DD
-- **Decision owners:** Name or role
-- **Related issues:** Link or issue number
+- **Related issue or pull request:**
+- **Supersedes:** None
+- **Superseded by:** None
 
 ## Context
 
-Describe the problem, constraints, and circumstances that require a decision.
-
-Explain why the decision matters now. Include relevant technical, security, operational, cost, or project constraints.
-
-## Decision drivers
-
-List the qualities or requirements that matter most to the decision.
-
-- Driver one
-- Driver two
-- Driver three
+What problem or decision does the project face? Explain why the choice matters now.
 
 ## Options considered
 
-### Option 1: Name
+### Option 1 — Name
 
-Briefly describe the option.
+- Benefits:
+- Drawbacks:
 
-**Advantages**
+### Option 2 — Name
 
-- Advantage
+- Benefits:
+- Drawbacks:
 
-**Disadvantages**
-
-- Disadvantage
-
-### Option 2: Name
-
-Briefly describe the option.
-
-**Advantages**
-
-- Advantage
-
-**Disadvantages**
-
-- Disadvantage
+Add more options only when they were seriously considered.
 
 ## Decision
 
-State the selected option clearly.
+State the chosen option clearly.
 
-Explain why it was selected and how it addresses the decision drivers.
+## Why this option
 
-## Consequences
+Explain why this choice best fits TLCore's current needs and learning goals.
 
-### Positive
+## Tradeoffs
 
-- What becomes easier or better?
+What does the decision make easier? What does it make harder? Include important cost, security, operational, or compatibility effects when relevant.
 
-### Negative
+## How it will be validated
 
-- What becomes harder or requires additional work?
+What evidence will show that this decision works as intended?
 
-### Risks
+## What I learned
 
-- What could make this decision unsuccessful?
-- How will those risks be managed?
-
-## Validation
-
-Explain how the project will determine whether this decision is working as intended.
+Record the main concept, comparison, or judgment developed through this decision.
 
 ## Revisit when
 
-List the evidence, constraints, or project changes that should trigger a review of this decision.
+List the conditions that would justify reconsidering the decision.
 
-## References
+## Related information
 
-- Relevant documentation, issues, standards, or previous ADRs
+- Related ADRs:
+- Documentation:
+- External references:
