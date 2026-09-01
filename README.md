@@ -5,6 +5,7 @@ TLCore is a long-lived engineering laboratory for practicing and demonstrating D
 The project is built around a small, realistic polyglot distributed application. Its application scope remains intentionally focused so that most engineering effort can go toward deploying, securing, observing, troubleshooting, recovering, and evolving the system.
 
 > **Current status:** Phase 0 — Foundation and engineering governance
+>
 > TLCore does not yet contain a runnable application or supported release.
 
 ## Project vision
@@ -123,7 +124,7 @@ Completed foundations include:
 - Issue and pull-request templates
 - Apache License 2.0
 
-Remaining Phase 0 work includes applying repository protections, completing the public-readiness review, and verifying the contributor experience.
+Repository protections, security settings, and the public-readiness review are complete. Phase 0 is undergoing its final exit review.
 
 ## Documentation
 
