@@ -1,143 +1,103 @@
 # TLCore System Overview
 
-- **Status:** Initial Phase 0 architecture
-- **Last updated:** 2026-08-29
-- **Related decision:** [ADR-0002: Begin with an event-driven polyglot architecture](../adr/0002-initial-event-driven-architecture.md)
+**Status:** Planned Phase 1 architecture
 
-## Purpose
+TLCore will begin as a small event-driven system that processes simulated device battery-status events. The application is intentionally focused so the project can spend more time on deployment, automation, observability, reliability, security, and troubleshooting.
 
-TLCore begins as a small event-driven platform that receives simulated device signals, processes them asynchronously, stores the resulting state, and exposes that state through an external API.
+This page describes the planned direction. The system has not been implemented yet, and details may change as Phase 1 work provides better evidence.
 
-The first application milestone processes one event type: a simulated device battery-status event.
-
-## High-level architecture
+## Planned architecture
 
 ```mermaid
 flowchart LR
     Client[Simulated client]
-    Future[Future devices and integrations]
+    Gateway[JavaScript gateway]
+    Broker[[Message broker]]
+    Processor[Python processor]
+    Worker[Ruby worker]
 
-    subgraph TLCore["TLCore application boundary"]
-        Gateway["JavaScript gateway<br/>External API and status queries"]
-        Broker[["Message broker"]]
-        Processor["Python processor<br/>Validation and classification"]
-        Worker["Ruby worker<br/>Follow-up workflows"]
-
-        subgraph Database["PostgreSQL server"]
-            GatewayData[("Gateway-owned schema<br/>Device-status projection")]
-            ProcessorData[("Processor-owned schema<br/>Processing records")]
-            WorkerData[("Worker-owned schema<br/>Workflow records")]
-        end
+    subgraph Database[PostgreSQL]
+        GatewayData[(Gateway schema)]
+        ProcessorData[(Processor schema)]
+        WorkerData[(Worker schema)]
     end
 
-    Client -->|"Submit battery event"| Gateway
-    Gateway -->|"Event accepted"| Client
+    Client -->|Submit battery event| Gateway
+    Gateway -->|Publish event| Broker
+    Broker -->|Consume event| Processor
+    Processor -->|Publish result| Broker
+    Broker -->|Consume result| Worker
+    Worker -->|Publish workflow result| Broker
+    Broker -->|Update latest state| Gateway
+    Gateway -->|Return latest state| Client
 
-    Gateway -->|"battery event"| Broker
-    Broker -->|"consume battery event"| Processor
-    Processor -->|"classification result"| Broker
-    Broker -->|"consume classification"| Worker
-    Worker -->|"workflow result"| Broker
-    Broker -->|"consume result events"| Gateway
-
-    Gateway -->|"write/read"| GatewayData
-    Processor -->|"write/read"| ProcessorData
-    Worker -->|"write/read"| WorkerData
-
-    Client -->|"Query latest state"| Gateway
-    Gateway -->|"Return processed state"| Client
-
-    Future -.->|"Later authenticated events"| Gateway
+    Gateway --> GatewayData
+    Processor --> ProcessorData
+    Worker --> WorkerData
 ```
-
-The message names shown in this diagram are conceptual. Exact event names, schemas, and versioning rules will be defined before Phase 1 implementation.
 
 ## Component responsibilities
 
-| Component          | Responsibility                                                                                     | Does not own                                  |
-| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| Simulated client   | Submits demonstration battery events and requests processed state                                  | Business processing or persistence            |
-| JavaScript gateway | External HTTP interface, request validation, event publication, and query-facing status projection | Battery classification or follow-up workflows |
-| Message broker     | Transfers events between independently operating applications                                      | Business logic or permanent application state |
-| Python processor   | Validates domain data and classifies battery levels                                                | Public API or follow-up integration work      |
-| Ruby worker        | Creates and completes simulated follow-up jobs                                                     | Public API or battery classification          |
-| PostgreSQL         | Provides durable storage through logically separated application-owned schemas                     | Cross-application business coordination       |
+| Component | Planned responsibility |
+| --- | --- |
+| Simulated client | Submit demonstration battery events and request the latest processed state |
+| JavaScript gateway | Provide the external API, validate requests, publish events, and return the latest state |
+| Message broker | Carry events between independently running applications |
+| Python processor | Validate and classify battery levels as `normal`, `low`, or `critical` |
+| Ruby worker | Perform simulated follow-up work when a battery needs attention |
+| PostgreSQL | Store application-owned processing and workflow state |
 
-## Initial event lifecycle
+Each application has one clear responsibility. The language boundaries are intentional because TLCore is also a place to practice operating and coordinating different application stacks.
 
-1. A simulated client submits a battery-status event to the JavaScript gateway.
-2. The gateway validates the external request and publishes an accepted event.
-3. The Python processor consumes the event and classifies the battery level as `normal`, `low`, or `critical`.
-4. The processor records its processing result and publishes a classification event.
-5. The Ruby worker consumes the classification and performs any required simulated follow-up work.
-6. The worker records the workflow result and publishes a result event.
-7. The JavaScript gateway consumes result events and updates its query-facing device-status projection.
-8. The client requests and receives the device’s latest processed state.
+## Planned event flow
+
+1. The simulated client sends a battery-status event to the gateway.
+2. The gateway validates the request and publishes an accepted event.
+3. The processor consumes the event and classifies the battery level.
+4. The processor stores its result and publishes a classification event.
+5. The worker consumes the classification and performs any required follow-up work.
+6. The worker stores its result and publishes a workflow event.
+7. The gateway consumes the result and updates its latest-state view.
+8. The client requests and receives the latest processed state.
+
+The exact request and event formats will be defined during Phase 1.
 
 ## Data ownership
 
-The initial applications may use one local PostgreSQL server, but they do not share unrestricted ownership of its data.
+The applications may initially share one local PostgreSQL server, but each application will own a separate schema or assigned set of tables.
 
-Each application:
+Applications will:
 
-- Owns its schema or explicitly assigned tables
-- Manages its own migrations
-- Uses its own data-access code
-- Does not directly modify another application’s data
-- Exchanges cross-application information through documented events
+- Manage their own data and migrations.
+- Avoid directly changing another application's data.
+- Exchange cross-application information through events.
 
-The gateway’s device-status projection is derived from result events. This allows it to answer external queries without reading the processor’s or worker’s tables.
+This keeps application responsibilities clear without requiring multiple database servers before the project needs them.
 
-Separate database servers may be introduced later if measured isolation, reliability, scaling, security, or lifecycle requirements justify them.
+## Phase 1 boundaries
 
-## Consistency and delivery expectations
+During Phase 1, the applications, message broker, and PostgreSQL will run directly on a local development machine.
 
-The workflow is eventually consistent. A successful event-submission response means the gateway accepted the event; it does not mean every downstream application has finished processing it.
+Phase 1 will use:
 
-Initial consumers must expect that:
+- Simulated battery data.
+- One event type.
+- No user accounts.
+- No real devices.
+- No cloud deployment.
+- No external notifications.
+- No required paid services.
 
-- An event may be delivered more than once
-- A consumer may restart during processing
-- Events may be delayed
-- Older device events may arrive after newer events
-- A downstream application may be temporarily unavailable
+Containers, Kubernetes, cloud infrastructure, and real-device integrations belong to later phases.
 
-Stable event identifiers, idempotent consumers, explicit event timestamps, and documented retry behavior will be required.
+## Open decisions
 
-## Trust boundaries
+Phase 1 work will decide:
 
-### External client to gateway
+- Application frameworks and runtime versions.
+- The message-broker product.
+- Database libraries and migration tools.
+- Request and event formats.
+- Local startup and testing commands.
 
-All external input is untrusted. The gateway must validate requests and must not trust client-provided identity, timestamps, identifiers, or values without applying defined rules.
-
-### Application to message broker
-
-Applications trust the broker as transport, but still validate consumed event structure and supported schema versions.
-
-### Application to PostgreSQL
-
-Each application receives only the database permissions required for its owned data. One application should not rely on unrestricted access to another application’s schema.
-
-### Future devices and integrations
-
-Real devices and external services remain outside the trusted application boundary. Authentication, authorization, revocation, rate limiting, and personal-data controls must be designed before those integrations are enabled.
-
-## Initial deployment boundary
-
-During Phase 1, each application, PostgreSQL, and the message broker run directly on a development machine.
-
-Later phases will change the deployment environment without changing the applications’ core responsibilities:
-
-- Phase 2 introduces containers and Docker Compose.
-- Phase 4 introduces local Kubernetes.
-- Phase 5 introduces reproducible infrastructure definitions.
-- Phase 10 introduces temporary AWS environments.
-- Phase 11 introduces authenticated personal-device integrations.
-
-## Explicitly deferred decisions
-
-This overview does not select:
-
-- JavaScript, Python, or Ruby frameworks
-- A message-broker product
-- Database libraries or migration tools
+These choices will be made when their requirements are clear. Important decisions that would be difficult to reverse will be recorded in an Architecture Decision Record.
