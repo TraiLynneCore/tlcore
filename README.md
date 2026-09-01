@@ -73,6 +73,7 @@ See the [full roadmap](docs/ROADMAP.md) for the planned outcomes of each phase.
 - [Roadmap](docs/ROADMAP.md)
 - [System overview](docs/architecture/SYSTEM_OVERVIEW.md)
 - [Architecture decisions](docs/adr/README.md)
+- [Learning log](docs/LEARNING_LOG.md)
 - [Contribution workflow](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 
