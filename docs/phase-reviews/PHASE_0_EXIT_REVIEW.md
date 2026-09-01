@@ -48,7 +48,6 @@ Phase 0 established:
 Evidence:
 
 - [README](../../README.md)
-- [Project Charter](../PROJECT_CHARTER.md)
 - [Roadmap](../ROADMAP.md)
 - [System Overview](../architecture/SYSTEM_OVERVIEW.md)
 - [Architecture Decision Records](../adr/README.md)
@@ -91,7 +90,7 @@ The decisions include context, alternatives, consequences, risks, validation req
 
 Evidence:
 
-- [Project Charter: First application milestone](../PROJECT_CHARTER.md#first-application-milestone-simulated-device-battery-status)
+- [README: Planned first capability](../../README.md#planned-first-capability)
 
 The milestone is limited to one simulated battery-status event lifecycle across the JavaScript gateway, Python processor, Ruby worker, message broker, and PostgreSQL.
 
