@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Accepted Battery Event Schema",
+  "description": "Event published by the gateway after accepting a valid battery submission.",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event identifier for the battery submission",
+      "format": "uuid"
+    },
+    "lifecycle_id": {
+      "type": "string",
+      "description": "Lifecycle identifier for the battery submission",
+      "format": "uuid"
+    },
+    "device_id": {
+      "type": "string",
+      "description": "Device identifier associated with the battery submission"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of the battery event",
+      "const": "battery_accepted"
+    },
+    "battery_percentage": {
+      "type": "integer",
+      "description": "Battery percentage at the time of the event",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp of when the event was created",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "lifecycle_id",
+    "device_id",
+    "event_type",
+    "battery_percentage",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

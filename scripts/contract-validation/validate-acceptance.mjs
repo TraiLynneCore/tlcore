@@ -44,7 +44,7 @@ const validateAcceptance = ajv.compile(acceptanceSchema);
 
 // Function to validate acceptance contracts
 export function validateAcceptanceContracts() {
-  console.log("[TLCore] Validating acceptance fixtures...");
+  console.log("[TLCore][contracts] Validating acceptance fixtures...");
 
   for (const fixture of acceptanceFixtures) {
     const data = loadJson(`./docs/contracts/examples/http/${fixture.name}`);

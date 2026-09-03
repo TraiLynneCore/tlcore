@@ -96,7 +96,7 @@ const validateStatus = ajv.compile(statusSchema);
 
 // Function to validate status contracts
 export function validateStatusContracts() {
-  console.log("[TLCore] Validating status fixtures...");
+  console.log("[TLCore][contracts] Validating status fixtures...");
 
   for (const fixture of statusFixtures) {
     const data = loadJson(`./docs/contracts/examples/http/${fixture.name}`);

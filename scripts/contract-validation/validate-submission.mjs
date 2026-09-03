@@ -44,7 +44,7 @@ const validateSubmission = ajv.compile(submissionSchema);
 
 // Function to validate submission contracts
 export function validateSubmissionContracts() {
-  console.log("[TLCore] Validating submission fixtures...");
+  console.log("[TLCore][contracts] Validating submission fixtures...");
 
   for (const fixture of submissionFixtures) {
     const data = loadJson(`./docs/contracts/examples/http/${fixture.name}`);

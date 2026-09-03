@@ -38,6 +38,28 @@ HTTP `202 Accepted` means the gateway accepted the request for processing. It
 does not mean classification or follow-up work has completed. Classification,
 worker outcome, and failure details do not belong in the acceptance response.
 
+## Event contracts
+
+### Accepted battery event
+
+After accepting a valid battery submission, the JavaScript gateway publishes
+an accepted battery event for the Python processor to consume and validate.
+The event follows
+[`accepted-battery-event.schema.json`](events/accepted-battery-event.schema.json).
+
+| Field                | Meaning                                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `event_id`           | UUID-formatted identifier for this individual event; it must differ from the lifecycle ID     |
+| `lifecycle_id`       | UUID-formatted identifier created when the request was accepted and preserved across the flow |
+| `device_id`          | Safe simulated device identifier supplied in the accepted client request                      |
+| `event_type`         | Fixed event type `battery_accepted`                                                            |
+| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                              |
+| `created_at`         | Date-time indicating when the gateway created the event                                        |
+
+The accepted event carries only the information the processor needs to
+validate and classify the battery reading. It does not define broker topics,
+delivery guarantees, retries, or duplicate-event handling.
+
 ## Component responsibilities
 
 | Component          | Responsibility                                                                                                             | Owned state                                                     |
