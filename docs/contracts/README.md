@@ -25,14 +25,14 @@ identifier to request the latest state later.
 
 ## Component responsibilities
 
-| Component | Responsibility | Owned state |
-| --- | --- | --- |
-| Simulated client | Submit a battery percentage and request the latest state | None |
-| JavaScript gateway | Validate client requests, publish accepted events, maintain query-facing state, and return the latest state | Accepted requests and client-visible state |
-| Message broker | Carry events between independently running applications | Delivery state required by the selected broker |
-| Python processor | Validate accepted events, classify battery percentages, persist classifications, and publish classification events | Processing and classification state |
-| Ruby worker | Consume every classification, perform the matching simulated follow-up, persist the outcome, and publish workflow outcomes | Follow-up and workflow state |
-| PostgreSQL | Store application-owned state | Separate schemas or assigned tables managed by each application |
+| Component          | Responsibility                                                                                                             | Owned state                                                     |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Simulated client   | Submit a battery percentage and request the latest state                                                                   | None                                                            |
+| JavaScript gateway | Validate client requests, publish accepted events, maintain query-facing state, and return the latest state                | Accepted requests and client-visible state                      |
+| Message broker     | Carry events between independently running applications                                                                    | Delivery state required by the selected broker                  |
+| Python processor   | Validate accepted events, classify battery percentages, persist classifications, and publish classification events         | Processing and classification state                             |
+| Ruby worker        | Consume every classification, perform the matching simulated follow-up, persist the outcome, and publish workflow outcomes | Follow-up and workflow state                                    |
+| PostgreSQL         | Store application-owned state                                                                                              | Separate schemas or assigned tables managed by each application |
 
 Each application manages its own migrations and may change only the data it
 owns. Applications exchange cross-application information through events. The
@@ -41,16 +41,17 @@ processor or worker data directly.
 
 ## Identifiers
 
-The workflow uses two kinds of identifier:
+The workflow uses the following kinds of identifiers:
 
-| Identifier | Meaning | Rule |
-| --- | --- | --- |
-| Lifecycle identifier | Connects a client submission to every later event and client-visible state | Created once when the gateway accepts the request and preserved unchanged throughout the lifecycle |
-| Event identifier | Identifies one event within the lifecycle | Created for each published event and distinct from the lifecycle identifier |
+| Identifier           | Meaning                                                                    | Rule                                                                                                                                                        |
+| -------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Device identifier    | Identifies the simulated device whose battery state is being reported      | Supplied by the client, remains stable for that simulated device, and must not contain a real serial number, hostname, MAC address, or personal device name |
+| Lifecycle identifier | Connects a client submission to every later event and client-visible state | Created once when the gateway accepts the request and preserved unchanged throughout the lifecycle                                                          |
+| Event identifier     | Identifies one event within the lifecycle                                  | Created for each published event and distinct from the lifecycle identifier                                                                                 |
 
-The machine-checkable contracts will define identifiers as UUID-formatted
-strings. Examples must use generated, simulated values that cannot be tied to a
-real device or person.
+The machine-checkable contracts will define lifecycle and event identifiers as
+UUID-formatted strings. Device identifiers use safe simulated values. Examples
+must not contain identifiers tied to a real device or person.
 
 ## Valid battery input
 
@@ -60,11 +61,11 @@ outside that range are invalid.
 
 The Python processor owns the classification decision:
 
-| Battery percentage | Classification | Meaning |
-| --- | --- | --- |
-| `21`–`100` | `normal` | The battery does not need attention |
-| `11`–`20` | `low` | The battery needs routine attention |
-| `0`–`10` | `critical` | The battery needs urgent attention |
+| Battery percentage | Classification | Meaning                             |
+| ------------------ | -------------- | ----------------------------------- |
+| `21`–`100`         | `normal`       | The battery does not need attention |
+| `11`–`20`          | `low`          | The battery needs routine attention |
+| `0`–`10`           | `critical`     | The battery needs urgent attention  |
 
 These ranges cover every valid percentage exactly once, with no gaps or
 overlap.
@@ -74,22 +75,22 @@ overlap.
 The Ruby worker consumes every classification so every accepted battery event
 follows the same service path.
 
-| Classification | Worker behavior | Completed outcome |
-| --- | --- | --- |
-| `normal` | Record that no follow-up is needed | `no_action_required` |
-| `low` | Perform a simulated routine follow-up | `routine_follow_up_completed` |
-| `critical` | Perform a simulated urgent follow-up | `urgent_follow_up_completed` |
+| Classification | Worker behavior                       | Completed outcome             |
+| -------------- | ------------------------------------- | ----------------------------- |
+| `normal`       | Record that no follow-up is needed    | `no_action_required`          |
+| `low`          | Perform a simulated routine follow-up | `routine_follow_up_completed` |
+| `critical`     | Perform a simulated urgent follow-up  | `urgent_follow_up_completed`  |
 
 The follow-up is an internal simulation. Phase 1 does not send a notification,
 contact an external service, or control a device.
 
 ## Client-visible states
 
-| State | Meaning |
-| --- | --- |
-| `pending` | The gateway accepted the request, but the workflow has not produced a final result |
-| `completed` | The gateway received a valid workflow outcome and updated its query-facing state |
-| `failed` | The workflow cannot produce a completed result for the accepted request |
+| State       | Meaning                                                                            |
+| ----------- | ---------------------------------------------------------------------------------- |
+| `pending`   | The gateway accepted the request, but the workflow has not produced a final result |
+| `completed` | The gateway received a valid workflow outcome and updated its query-facing state   |
+| `failed`    | The workflow cannot produce a completed result for the accepted request            |
 
 A completed state must identify the classification and matching worker outcome.
 A failed state must provide a safe, useful reason without exposing credentials,
@@ -98,11 +99,11 @@ evidence.
 
 Failed states use a small fixed set of client-visible reasons:
 
-| Failure reason | Meaning |
-| --- | --- |
-| `processing_failed` | The accepted battery event did not produce a valid classification |
-| `follow_up_failed` | The classification did not produce a valid workflow outcome |
-| `result_rejected` | The gateway received a workflow result that it could not accept as the completed state |
+| Failure reason      | Meaning                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `processing_failed` | The accepted battery event did not produce a valid classification                      |
+| `follow_up_failed`  | The classification did not produce a valid workflow outcome                            |
+| `result_rejected`   | The gateway received a workflow result that it could not accept as the completed state |
 
 These reasons describe where the lifecycle stopped without exposing an internal
 error message. Detailed diagnostic evidence belongs in each service's future

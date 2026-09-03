@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Battery Submission Schema",
+  "description": "Schema for battery submission data",
+  "type": "object",
+  "properties": {
+    "device_id": {
+      "type": "string",
+      "description": "Simulated device identifier"
+    },
+    "battery_percentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Battery percentage at the time of submission"
+    }
+  },
+  "required": ["device_id", "battery_percentage"],
+  "additionalProperties": false
+}
