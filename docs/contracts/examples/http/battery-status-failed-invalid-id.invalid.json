@@ -1,0 +1,5 @@
+{
+  "state": "failed",
+  "lifecycle_id": "invalid-uuid",
+  "failure_reason": "processing_failed"
+}

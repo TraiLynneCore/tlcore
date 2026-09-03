@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Battery Status Schema",
+  "description": "Response returned by the gateway when requesting the status of a battery submission.",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current lifecycle state of the battery submission.",
+          "const": "pending"
+        },
+        "lifecycle_id": {
+          "type": "string",
+          "description": "Lifecycle identifier for the battery submission",
+          "format": "uuid"
+        }
+      },
+      "required": ["state", "lifecycle_id"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current lifecycle state of the battery submission.",
+          "const": "completed"
+        },
+        "lifecycle_id": {
+          "type": "string",
+          "description": "Lifecycle identifier for the battery submission",
+          "format": "uuid"
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["normal", "low", "critical"]
+        },
+        "worker_outcome": {
+          "type": "string",
+          "enum": [
+            "no_action_required",
+            "routine_follow_up_completed",
+            "urgent_follow_up_completed"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "classification": {
+              "const": "normal"
+            },
+            "worker_outcome": {
+              "const": "no_action_required"
+            }
+          }
+        },
+        {
+          "properties": {
+            "classification": {
+              "const": "low"
+            },
+            "worker_outcome": {
+              "const": "routine_follow_up_completed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "classification": {
+              "const": "critical"
+            },
+            "worker_outcome": {
+              "const": "urgent_follow_up_completed"
+            }
+          }
+        }
+      ],
+      "required": ["state", "lifecycle_id", "classification", "worker_outcome"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current lifecycle state of the battery submission.",
+          "const": "failed"
+        },
+        "lifecycle_id": {
+          "type": "string",
+          "description": "Lifecycle identifier for the battery submission",
+          "format": "uuid"
+        },
+        "failure_reason": {
+          "type": "string",
+          "enum": ["processing_failed", "follow_up_failed", "result_rejected"]
+        }
+      },
+      "required": ["state", "lifecycle_id", "failure_reason"],
+      "additionalProperties": false
+    }
+  ]
+}
