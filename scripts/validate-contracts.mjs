@@ -47,7 +47,39 @@ const submissionFixtures = [
   },
 ];
 
+const acceptanceSchema = loadJson(
+  "./docs/contracts/http/battery-acceptance.schema.json",
+);
+
+const acceptanceFixtures = [
+  {
+    name: "battery-acceptance.valid.json",
+    expectedValid: true,
+  },
+  {
+    name: "battery-acceptance-missing-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-acceptance-invalid-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-acceptance-invalid-state.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-acceptance-additional-property.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-acceptance-missing-state.invalid.json",
+    expectedValid: false,
+  },
+];
+
 const validateSubmission = ajv.compile(submissionSchema);
+const validateAcceptance = ajv.compile(acceptanceSchema);
 
 function checkFixture(name, validate, data, expectedValid) {
   const actualValid = validate(data);
@@ -72,4 +104,10 @@ for (const fixture of submissionFixtures) {
   const data = loadJson(`./docs/contracts/examples/http/${fixture.name}`);
 
   checkFixture(fixture.name, validateSubmission, data, fixture.expectedValid);
+}
+
+for (const fixture of acceptanceFixtures) {
+  const data = loadJson(`./docs/contracts/examples/http/${fixture.name}`);
+
+  checkFixture(fixture.name, validateAcceptance, data, fixture.expectedValid);
 }

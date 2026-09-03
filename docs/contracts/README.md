@@ -23,6 +23,21 @@ receives a lifecycle identifier and a `pending` state. Acceptance does not mean
 that downstream processing has finished. The client uses the lifecycle
 identifier to request the latest state later.
 
+## Client HTTP contracts
+
+### Acceptance response
+
+After validating a battery submission, the gateway accepts it for asynchronous
+processing and responds with HTTP `202 Accepted`.
+
+The response body follows
+[`battery-acceptance.schema.json`](http/battery-acceptance.schema.json) and
+contains the lifecycle identifier and a `pending` state.
+
+HTTP `202 Accepted` means the gateway accepted the request for processing. It
+does not mean classification or follow-up work has completed. Classification,
+worker outcome, and failure details do not belong in the acceptance response.
+
 ## Component responsibilities
 
 | Component          | Responsibility                                                                                                             | Owned state                                                     |
