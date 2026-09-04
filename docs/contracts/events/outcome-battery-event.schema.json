@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Outcome Battery Event Schema",
+  "description": "Event published by the worker after handling a classified battery event.",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event identifier for the battery submission",
+      "format": "uuid"
+    },
+    "lifecycle_id": {
+      "type": "string",
+      "description": "Lifecycle identifier for the battery submission",
+      "format": "uuid"
+    },
+    "device_id": {
+      "type": "string",
+      "description": "Device identifier associated with the battery submission"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of the battery event",
+      "const": "battery_workflow_outcome"
+    },
+    "battery_percentage": {
+      "type": "integer",
+      "description": "Battery percentage at the time of the event",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "classification": {
+      "type": "string",
+      "description": "Classification of the battery based on its percentage",
+      "enum": ["normal", "low", "critical"]
+    },
+    "state": {
+      "type": "string",
+      "enum": ["completed", "failed"]
+    },
+    "worker_outcome": {
+      "type": "string",
+      "description": "Outcome recorded by the worker after handling the classification",
+      "enum": [
+        "no_action_required",
+        "routine_follow_up_completed",
+        "urgent_follow_up_completed"
+      ]
+    },
+    "failure_reason": {
+      "type": "string",
+      "const": "follow_up_failed"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp of when the event was created",
+      "format": "date-time"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 21,
+          "maximum": 100
+        },
+        "classification": {
+          "type": "string",
+          "const": "normal"
+        },
+        "state": {
+          "type": "string",
+          "const": "completed"
+        },
+        "worker_outcome": {
+          "type": "string",
+          "const": "no_action_required"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "worker_outcome",
+        "created_at"
+      ],
+      "not": { "required": ["failure_reason"] }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 11,
+          "maximum": 20
+        },
+        "classification": {
+          "type": "string",
+          "const": "low"
+        },
+        "state": {
+          "type": "string",
+          "const": "completed"
+        },
+        "worker_outcome": {
+          "type": "string",
+          "const": "routine_follow_up_completed"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "worker_outcome",
+        "created_at"
+      ],
+      "not": { "required": ["failure_reason"] }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "classification": {
+          "type": "string",
+          "const": "critical"
+        },
+        "state": {
+          "type": "string",
+          "const": "completed"
+        },
+        "worker_outcome": {
+          "type": "string",
+          "const": "urgent_follow_up_completed"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "worker_outcome",
+        "created_at"
+      ],
+      "not": { "required": ["failure_reason"] }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "classification": {
+          "type": "string",
+          "const": "critical"
+        },
+        "state": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure_reason": {
+          "type": "string",
+          "const": "follow_up_failed"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "failure_reason",
+        "created_at"
+      ],
+      "not": { "required": ["worker_outcome"] }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 11,
+          "maximum": 20
+        },
+        "classification": {
+          "type": "string",
+          "const": "low"
+        },
+        "state": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure_reason": {
+          "type": "string",
+          "const": "follow_up_failed"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "failure_reason",
+        "created_at"
+      ],
+      "not": { "required": ["worker_outcome"] }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 21,
+          "maximum": 100
+        },
+        "classification": {
+          "type": "string",
+          "const": "normal"
+        },
+        "state": {
+          "type": "string",
+          "const": "failed"
+        },
+        "failure_reason": {
+          "type": "string",
+          "const": "follow_up_failed"
+        }
+      },
+      "required": [
+        "event_id",
+        "lifecycle_id",
+        "device_id",
+        "event_type",
+        "battery_percentage",
+        "classification",
+        "state",
+        "failure_reason",
+        "created_at"
+      ],
+      "not": { "required": ["worker_outcome"] }
+    }
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+{
+  "event_id": "123d4567-c89b-12b3-a456-426614174000",
+  "lifecycle_id": "invalid-uuid",
+  "device_id": "sim-device-001",
+  "event_type": "battery_workflow_outcome",
+  "battery_percentage": 85,
+  "classification": "normal",
+  "state": "completed",
+  "worker_outcome": "no_action_required",
+  "created_at": "2024-06-01T12:00:00Z"
+}

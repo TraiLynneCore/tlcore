@@ -60,6 +60,24 @@ The accepted event carries only the information the processor needs to
 validate and classify the battery reading. It does not define broker topics,
 delivery guarantees, retries, or duplicate-event handling.
 
+### Classified battery event
+
+After processing an accepted battery event, the Python processor publishes a
+classified battery event for the Ruby worker. The event follows
+[`classified-battery-event.schema.json`](events/classified-battery-event.schema.json).
+It preserves the lifecycle context, adds the processor-owned classification,
+and requires the battery percentage and classification to match the defined
+thresholds.
+
+### Outcome battery event
+
+After handling a classified battery event, the Ruby worker publishes an
+outcome battery event for the gateway. The event follows
+[`outcome-battery-event.schema.json`](events/outcome-battery-event.schema.json).
+A `completed` outcome includes the matching `worker_outcome`. A `failed`
+outcome includes `follow_up_failed`. An outcome event cannot contain both a
+worker outcome and a failure reason.
+
 ## Component responsibilities
 
 | Component          | Responsibility                                                                                                             | Owned state                                                     |
@@ -86,7 +104,7 @@ The workflow uses the following kinds of identifiers:
 | Lifecycle identifier | Connects a client submission to every later event and client-visible state | Created once when the gateway accepts the request and preserved unchanged throughout the lifecycle                                                          |
 | Event identifier     | Identifies one event within the lifecycle                                  | Created for each published event and distinct from the lifecycle identifier                                                                                 |
 
-The machine-checkable contracts will define lifecycle and event identifiers as
+The machine-checkable contracts define lifecycle and event identifiers as
 UUID-formatted strings. Device identifiers use safe simulated values. Examples
 must not contain identifiers tied to a real device or person.
 
@@ -155,8 +173,9 @@ structured logs, not in the client-visible state.
    client.
 4. The processor consumes the accepted event, validates it, classifies the
    battery percentage, stores its result, and publishes a classification event.
-5. The worker consumes the classification event, performs the matching
-   simulated follow-up, stores its result, and publishes a workflow outcome.
+5. The worker consumes every classification, records the matching completed
+   outcome or a failed outcome, stores its result, and publishes a workflow
+   outcome.
 6. The gateway consumes the workflow outcome and changes its query-facing state
    to `completed` or `failed`.
 7. The client requests and receives the latest state using the lifecycle
@@ -182,7 +201,7 @@ Each service validates information when it crosses that service's boundary:
 - The gateway rejects an invalid workflow outcome instead of exposing it as a
   completed result.
 
-The machine-checkable contracts will define the exact valid and invalid forms.
+The machine-checkable contracts define the exact valid and invalid forms.
 Retry, duplicate-delivery, ordering, and restart-recovery behavior will be
 implemented by later Phase 1 work and are not defined here.
 
@@ -204,9 +223,10 @@ not establish a long-term public API-versioning policy.
 ## Contract artifacts
 
 Language-neutral, machine-checkable request, response, and event definitions
-will be added under this directory with representative valid, invalid,
-boundary, and complete-lifecycle examples. Those artifacts will be the
-executable expression of the behavior documented here.
+and representative valid, invalid, and boundary examples are stored under this
+directory. Those artifacts are the executable expression of the behavior
+documented here. Complete-lifecycle examples will be added by later contract
+work.
 
 Until those artifacts and the applications exist, this document describes
 planned behavior rather than an implemented system.
