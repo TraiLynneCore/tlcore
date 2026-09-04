@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Classified Battery Event Schema",
+  "description": "Event published by the processor after classifying an accepted battery event.",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Event identifier for the battery submission",
+      "format": "uuid"
+    },
+    "lifecycle_id": {
+      "type": "string",
+      "description": "Lifecycle identifier for the battery submission",
+      "format": "uuid"
+    },
+    "device_id": {
+      "type": "string",
+      "description": "Device identifier associated with the battery submission"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of the battery event",
+      "const": "battery_classified"
+    },
+    "battery_percentage": {
+      "type": "integer",
+      "description": "Battery percentage at the time of the event",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "classification": {
+      "type": "string",
+      "description": "Classification of the battery based on its percentage",
+      "enum": ["normal", "low", "critical"]
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Timestamp of when the event was created",
+      "format": "date-time"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 21,
+          "maximum": 100
+        },
+        "classification": {
+          "type": "string",
+          "const": "normal"
+        }
+      }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 11,
+          "maximum": 20
+        },
+        "classification": {
+          "type": "string",
+          "const": "low"
+        }
+      }
+    },
+    {
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "classification": {
+          "type": "string",
+          "const": "critical"
+        }
+      }
+    }
+  ],
+  "required": [
+    "event_id",
+    "lifecycle_id",
+    "device_id",
+    "event_type",
+    "battery_percentage",
+    "classification",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

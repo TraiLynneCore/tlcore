@@ -1,6 +1,6 @@
 import addFormats from "ajv-formats";
 import Ajv2020 from "ajv/dist/2020.js";
-import { checkFixture, loadJson } from "./helpers.mjs";
+import { checkFixture, createEventValidator, loadJson } from "./helpers.mjs";
 
 // Create an AJV instance with allErrors option enabled
 const ajv = new Ajv2020({ allErrors: true });
@@ -12,7 +12,7 @@ const eventSchema = loadJson(
 );
 
 // Define the event fixtures with their expected validity
-const eventFixtures = [
+const acceptedEventFixtures = [
   {
     name: "accepted-battery-event.valid.json",
     expectedValid: true,
@@ -90,36 +90,16 @@ const eventFixtures = [
 // Compile the event schema using AJV
 const validateEventSchema = ajv.compile(eventSchema);
 
-function validateEvent(data) {
-  const schemaValid = validateEventSchema(data);
-
-  if (!schemaValid) {
-    validateEvent.errors = validateEventSchema.errors;
-    return false;
-  }
-
-  if (data.event_id === data.lifecycle_id) {
-    validateEvent.errors = [
-      {
-        instancePath: "/event_id",
-        keyword: "distinctIdentifiers",
-        message: "must differ from lifecycle_id",
-      },
-    ];
-    return false;
-  }
-
-  validateEvent.errors = null;
-  return true;
-}
+const validate = createEventValidator(validateEventSchema);
 
 // Function to validate event contracts
-export function validateEventContracts() {
-  console.log("[TLCore][contracts] Validating event fixtures...");
-
-  for (const fixture of eventFixtures) {
+export function validateAcceptedEvents() {
+  console.log(
+    "[TLCore][contracts] Validating accepted battery event fixtures...",
+  );
+  for (const fixture of acceptedEventFixtures) {
     const data = loadJson(`./docs/contracts/examples/events/${fixture.name}`);
 
-    checkFixture(fixture.name, validateEvent, data, fixture.expectedValid);
+    checkFixture(fixture.name, validate, data, fixture.expectedValid);
   }
 }
