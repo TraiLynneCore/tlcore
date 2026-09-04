@@ -64,6 +64,11 @@ The canonical request and event behavior is defined in the
 [Phase 1 service contracts](../contracts/README.md). The services that will
 implement those contracts are not yet complete.
 
+The contract suite also validates complete example lifecycles. In addition to
+checking each request, response, and event against its schema, it verifies that
+the identifiers, battery reading, classification, and final client-visible
+state remain consistent across the entire workflow.
+
 ## Data ownership
 
 The applications may initially share one local PostgreSQL server, but each application will own a separate schema or assigned set of tables.

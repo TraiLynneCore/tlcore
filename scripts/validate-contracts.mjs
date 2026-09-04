@@ -1,6 +1,7 @@
 import { validateAcceptanceContracts } from "./contract-validation/validate-acceptance.mjs";
 import { validateAcceptedEvents } from "./contract-validation/validate-accepted-event.mjs";
 import { validateClassifiedEvents } from "./contract-validation/validate-classified-event.mjs";
+import { validateLifecycles } from "./contract-validation/validate-lifecycle.mjs";
 import { validateOutcomeEvents } from "./contract-validation/validate-outcome-event.mjs";
 import { validateStatusContracts } from "./contract-validation/validate-status.mjs";
 import { validateSubmissionContracts } from "./contract-validation/validate-submission.mjs";
@@ -14,3 +15,4 @@ console.log("[TLCore][contracts] Validating event fixtures...");
 validateAcceptedEvents();
 validateClassifiedEvents();
 validateOutcomeEvents();
+validateLifecycles();

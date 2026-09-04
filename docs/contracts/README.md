@@ -205,6 +205,22 @@ The machine-checkable contracts define the exact valid and invalid forms.
 Retry, duplicate-delivery, ordering, and restart-recovery behavior will be
 implemented by later Phase 1 work and are not defined here.
 
+## Lifecycle validation
+
+The individual request, response, and event fixtures verify each contract at a
+single service boundary. Complete lifecycle fixtures under
+[`examples/lifecycles`](examples/lifecycles) verify that those individually
+valid records also describe one consistent workflow from submission through
+the final client-visible state.
+
+The lifecycle validator checks that a workflow preserves its lifecycle ID,
+device ID, and battery percentage; assigns a distinct event ID to each event;
+preserves the processor classification through the worker outcome; and makes
+the final client-visible state agree with that outcome. Valid fixtures cover
+completed and failed workflows for every battery classification. Invalid
+fixtures isolate one broken cross-stage relationship while keeping every
+individual record valid against its own schema.
+
 ## Compatibility during Phase 1
 
 A contract change is incompatible when an application following the previous
@@ -224,9 +240,8 @@ not establish a long-term public API-versioning policy.
 
 Language-neutral, machine-checkable request, response, and event definitions
 and representative valid, invalid, and boundary examples are stored under this
-directory. Those artifacts are the executable expression of the behavior
-documented here. Complete-lifecycle examples will be added by later contract
-work.
+directory. Complete-lifecycle examples are stored in `examples/lifecycles`.
+Those artifacts are the executable expression of the behavior documented here.
 
 Until those artifacts and the applications exist, this document describes
 planned behavior rather than an implemented system.
