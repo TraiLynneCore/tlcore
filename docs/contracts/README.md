@@ -25,6 +25,23 @@ identifier to request the latest state later.
 
 ## Client HTTP contracts
 
+### Battery submission
+
+The simulated client submits one object following
+[`battery-submission.schema.json`](http/battery-submission.schema.json). The
+gateway owns validation of this request before it accepts or publishes
+anything.
+
+| Field                | Meaning                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------ |
+| `device_id`          | Safe simulated identifier for the device reporting its battery state                            |
+| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                               |
+
+The contracts intentionally do not establish an HTTP path or method. They
+define the request data and observable acceptance behavior so the gateway and
+client can be implemented independently without changing the asynchronous
+workflow.
+
 ### Acceptance response
 
 After validating a battery submission, the gateway accepts it for asynchronous
@@ -37,6 +54,15 @@ contains the lifecycle identifier and a `pending` state.
 HTTP `202 Accepted` means the gateway accepted the request for processing. It
 does not mean classification or follow-up work has completed. Classification,
 worker outcome, and failure details do not belong in the acceptance response.
+
+### Latest-status response
+
+The client later uses the lifecycle identifier from the acceptance response to
+retrieve the latest state. The gateway owns that client-visible query state and
+returns an object following
+[`battery-status.schema.json`](http/battery-status.schema.json). A status can
+be `pending`, `completed`, or `failed`; their required details and meanings are
+defined in [Client-visible states](#client-visible-states).
 
 ## Event contracts
 
@@ -220,6 +246,9 @@ the final client-visible state agree with that outcome. Valid fixtures cover
 completed and failed workflows for every battery classification. Invalid
 fixtures isolate one broken cross-stage relationship while keeping every
 individual record valid against its own schema.
+
+Run `npm test` from the repository root to validate all request, response,
+event, and lifecycle fixtures.
 
 ## Compatibility during Phase 1
 
