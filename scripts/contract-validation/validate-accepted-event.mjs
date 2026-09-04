@@ -98,7 +98,9 @@ export function validateAcceptedEvents() {
     "[TLCore][contracts] Validating accepted battery event fixtures...",
   );
   for (const fixture of acceptedEventFixtures) {
-    const data = loadJson(`./docs/contracts/examples/events/${fixture.name}`);
+    const data = loadJson(
+      `./docs/contracts/examples/events/accepted/${fixture.name}`,
+    );
 
     checkFixture(fixture.name, validate, data, fixture.expectedValid);
   }

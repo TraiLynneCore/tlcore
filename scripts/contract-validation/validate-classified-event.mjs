@@ -142,7 +142,9 @@ export function validateClassifiedEvents() {
     "[TLCore][contracts] Validating classified battery event fixtures...",
   );
   for (const fixture of classifiedEventFixtures) {
-    const data = loadJson(`./docs/contracts/examples/events/${fixture.name}`);
+    const data = loadJson(
+      `./docs/contracts/examples/events/classified/${fixture.name}`,
+    );
 
     checkFixture(fixture.name, validate, data, fixture.expectedValid);
   }
