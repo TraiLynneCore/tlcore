@@ -224,6 +224,22 @@ const lifecycles = [
       finalStatusConsistent: false,
     },
   },
+  {
+    name: "battery-lifecycle-result-rejected.invalid.json",
+    expected: {
+      lifecycleIdConsistent: true,
+      eventIdsUnique: true,
+      percentageConsistent: true,
+      deviceIdConsistent: true,
+      submissionStatus: true,
+      acceptanceStatus: true,
+      acceptanceEventStatus: true,
+      classificationEventStatus: true,
+      outcomeEventStatus: false,
+      statusStatus: true,
+      finalStatusConsistent: true,
+    },
+  },
 ];
 
 function validateLifecycleId(lifecycle) {
@@ -276,6 +292,13 @@ function validateFinalStatusConsistency(lifecycle) {
   const outcomeEvent = lifecycle[4];
   const finalStatus = lifecycle[5];
 
+  if (!validateOutcomeEventSchema(outcomeEvent)) {
+    return (
+      finalStatus.state === "failed" &&
+      finalStatus.failure_reason === "result_rejected"
+    );
+  }
+
   if (outcomeEvent.state !== finalStatus.state) {
     return false;
   }
@@ -320,7 +343,9 @@ export function validateLifecycles() {
 
     for (const result in validationResult) {
       if (validationResult[result] !== data.expected[result]) {
-        console.error(`FAIL ${data.name}: ${result}`);
+        console.error(
+          `FAIL ${data.name}: ${result} expected ${data.expected[result]} but received ${validationResult[result]}`,
+        );
         process.exitCode = 1;
         passed = false;
       }
