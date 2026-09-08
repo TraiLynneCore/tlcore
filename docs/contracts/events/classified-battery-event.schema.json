@@ -6,9 +6,9 @@
   "properties": {
     "event_id": {
       "type": "string",
-      "description": "Event identifier for the battery submission",
+      "description": "Event identifier for this individual event; must not be equal to lifecycle_id",
       "format": "uuid"
-    },
+    }
     "lifecycle_id": {
       "type": "string",
       "description": "Lifecycle identifier for the battery submission",
