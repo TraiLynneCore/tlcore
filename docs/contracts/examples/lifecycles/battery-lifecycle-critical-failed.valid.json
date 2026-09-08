@@ -1,0 +1,43 @@
+[
+  {
+    "device_id": "sim-device-001",
+    "battery_percentage": 5
+  },
+  {
+    "state": "pending",
+    "lifecycle_id": "123a4567-b89b-12c3-d456-426614174000"
+  },
+  {
+    "event_id": "123d4567-c89b-12b3-a456-426614174000",
+    "lifecycle_id": "123a4567-b89b-12c3-d456-426614174000",
+    "device_id": "sim-device-001",
+    "event_type": "battery_accepted",
+    "battery_percentage": 5,
+    "created_at": "2024-06-01T12:00:00Z"
+  },
+  {
+    "event_id": "123d4567-c89b-12b3-a456-426614174001",
+    "lifecycle_id": "123a4567-b89b-12c3-d456-426614174000",
+    "device_id": "sim-device-001",
+    "event_type": "battery_classified",
+    "battery_percentage": 5,
+    "classification": "critical",
+    "created_at": "2024-06-01T12:00:00Z"
+  },
+  {
+    "event_id": "123d4567-c89b-12b3-a456-426614174002",
+    "lifecycle_id": "123a4567-b89b-12c3-d456-426614174000",
+    "device_id": "sim-device-001",
+    "event_type": "battery_workflow_outcome",
+    "battery_percentage": 5,
+    "classification": "critical",
+    "state": "failed",
+    "failure_reason": "follow_up_failed",
+    "created_at": "2024-06-01T12:00:00Z"
+  },
+  {
+    "state": "failed",
+    "lifecycle_id": "123a4567-b89b-12c3-d456-426614174000",
+    "failure_reason": "follow_up_failed"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "name": "tlcore",
+  "version": "0.0.0",
+  "description": "TLCore is a personal engineering laboratory for building practical skills in software engineering, distributed systems, DevOps, platform engineering, site reliability engineering, cloud infrastructure, and security. It validates TLCore contracts.",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node scripts/validate-contracts.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TraiLynneCore/tlcore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TraiLynneCore/tlcore/issues"
+  },
+  "homepage": "https://github.com/TraiLynneCore/tlcore#readme",
+  "private": true,
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

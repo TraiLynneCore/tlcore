@@ -1,0 +1,7 @@
+{
+  "event_id": "123d4567-c89b-12b3-a456-426614174000",
+  "device_id": "sim-device-001",
+  "event_type": "battery_accepted",
+  "battery_percentage": 85,
+  "created_at": "2024-06-01T12:00:00Z"
+}

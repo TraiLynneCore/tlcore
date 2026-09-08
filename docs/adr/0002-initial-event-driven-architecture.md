@@ -36,11 +36,14 @@ TLCore will begin as a small event-driven polyglot system.
 | --- | --- |
 | JavaScript gateway | Accept and validate external requests, publish events, maintain the query-facing latest state, and return results |
 | Python processor | Validate and classify battery events as `normal`, `low`, or `critical` |
-| Ruby worker | Perform simulated follow-up work when a classified event needs attention |
+| Ruby worker | Handle every classification: record no action for `normal` and perform simulated follow-up for `low` and `critical` |
 | Message broker | Carry events between independently running applications |
 | PostgreSQL | Store application-owned processing, workflow, and query state |
 
-The exact frameworks, message broker, database libraries, and event formats will be selected during Phase 1 when their requirements are clearer.
+The exact application frameworks, message broker, and database libraries will
+be selected during Phase 1 when their requirements are clearer. The shared
+request, response, and event formats are defined in the
+[Phase 1 service contracts](../contracts/README.md).
 
 ## Planned event flow
 
@@ -48,7 +51,8 @@ The exact frameworks, message broker, database libraries, and event formats will
 2. The gateway validates and publishes the event.
 3. The processor consumes, validates, and classifies the event.
 4. The processor stores and publishes its result.
-5. The worker consumes the result and performs any required follow-up work.
+5. The worker consumes every classification, records no action for `normal`,
+   and performs the matching simulated follow-up for `low` and `critical`.
 6. The worker stores and publishes its result.
 7. The gateway consumes result events and updates its latest-state view.
 8. The client retrieves the latest processed state through the gateway.
@@ -90,7 +94,7 @@ The decision is working when:
 - Each application can be started, configured, and tested independently.
 - Duplicate delivery does not create duplicate outcomes.
 - Processing can recover after an application restarts.
-- The gateway returns the latest completed state without reading another application's tables.
+- The gateway returns the latest lifecycle state without reading another application's tables.
 - The event lifecycle can be understood from identifiers and system evidence.
 - The complete workflow runs locally without paid services.
 

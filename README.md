@@ -15,7 +15,8 @@ The first capability will process a simulated device battery-status event:
 1. A client submits a battery event through a JavaScript gateway.
 2. A Python application processes the event asynchronously.
 3. The battery level is classified as `normal`, `low`, or `critical`.
-4. A Ruby worker performs a simulated follow-up task when attention is required.
+4. A Ruby worker handles every classification, recording `no_action_required`
+   for `normal` and performing simulated follow-up for `low` and `critical`.
 5. PostgreSQL stores the processing state.
 6. The gateway returns the device's latest processed state.
 
@@ -72,6 +73,7 @@ See the [full roadmap](docs/ROADMAP.md) for the planned outcomes of each phase.
 
 - [Roadmap](docs/ROADMAP.md)
 - [System overview](docs/architecture/SYSTEM_OVERVIEW.md)
+- [Phase 1 service contracts](docs/contracts/README.md)
 - [Architecture decisions](docs/adr/README.md)
 - [Learning log](docs/LEARNING_LOG.md)
 - [Contribution workflow](CONTRIBUTING.md)
