@@ -34,7 +34,7 @@ Phase 1 should produce working software and practical learning evidence. The pro
 
 I defined the shared Phase 1 battery-event contracts before building the gateway, processor, or worker. The work included HTTP submission, acceptance, and status schemas; accepted, classified, and outcome event schemas; valid, invalid, boundary, and complete-lifecycle fixtures; contract validators; and the documentation that explains the workflow.
 
-The final lifecycle validator verifies both individual records and the relationships between them. It checks that the lifecycle ID, device ID, and battery percentage remain consistent; event IDs are unique; the classification reaches the worker outcome unchanged; and the final client-visible state agrees with that outcome.
+The final lifecycle validator verifies both individual records and the relationships between them. It checks that the lifecycle ID, device ID, and battery percentage remain consistent; event IDs are unique; and the final client-visible state agrees with that outcome.
 
 ### What I learned
 

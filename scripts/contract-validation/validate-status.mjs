@@ -54,10 +54,6 @@ const statusFixtures = [
     expectedValid: false,
   },
   {
-    name: "battery-status-failed-processing.valid.json",
-    expectedValid: true,
-  },
-  {
     name: "battery-status-failed-follow-up.valid.json",
     expectedValid: true,
   },

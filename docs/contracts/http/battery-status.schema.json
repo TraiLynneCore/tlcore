@@ -96,7 +96,7 @@
         },
         "failure_reason": {
           "type": "string",
-          "enum": ["processing_failed", "follow_up_failed", "result_rejected"]
+          "enum": ["follow_up_failed", "result_rejected"]
         }
       },
       "required": ["state", "lifecycle_id", "failure_reason"],

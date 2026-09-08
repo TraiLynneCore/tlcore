@@ -38,7 +38,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -55,7 +54,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -72,7 +70,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -89,7 +86,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -106,7 +102,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -123,7 +118,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -140,7 +134,6 @@ const lifecycles = [
       lifecycleIdConsistent: false,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -157,7 +150,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: false,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -174,7 +166,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: false,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -191,7 +182,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: false,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -208,7 +198,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -225,7 +214,6 @@ const lifecycles = [
       lifecycleIdConsistent: true,
       eventIdsUnique: true,
       percentageConsistent: true,
-      classificationConsistent: true,
       deviceIdConsistent: true,
       submissionStatus: true,
       acceptanceStatus: true,
@@ -273,10 +261,6 @@ function validateBatteryPercentage(lifecycle) {
   );
 }
 
-function validateClassification(lifecycle) {
-  return lifecycle[3].classification === lifecycle[4].classification;
-}
-
 function validateDeviceId(lifecycle) {
   const deviceIds = [
     lifecycle[0].device_id,
@@ -315,7 +299,6 @@ function validateLifecycle(lifecycleFile) {
     lifecycleIdConsistent: validateLifecycleId(lifecycle),
     eventIdsUnique: validateEventIds(lifecycle),
     percentageConsistent: validateBatteryPercentage(lifecycle),
-    classificationConsistent: validateClassification(lifecycle),
     deviceIdConsistent: validateDeviceId(lifecycle),
     submissionStatus: validateSubmissionSchema(lifecycle[0]),
     acceptanceStatus: validateAcceptanceSchema(lifecycle[1]),

@@ -32,10 +32,10 @@ The simulated client submits one object following
 gateway owns validation of this request before it accepts or publishes
 anything.
 
-| Field                | Meaning                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------ |
-| `device_id`          | Safe simulated identifier for the device reporting its battery state                            |
-| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                               |
+| Field                | Meaning                                                              |
+| -------------------- | -------------------------------------------------------------------- |
+| `device_id`          | Safe simulated identifier for the device reporting its battery state |
+| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive    |
 
 The contracts intentionally do not establish an HTTP path or method. They
 define the request data and observable acceptance behavior so the gateway and
@@ -78,9 +78,9 @@ The event follows
 | `event_id`           | UUID-formatted identifier for this individual event; it must differ from the lifecycle ID     |
 | `lifecycle_id`       | UUID-formatted identifier created when the request was accepted and preserved across the flow |
 | `device_id`          | Safe simulated device identifier supplied in the accepted client request                      |
-| `event_type`         | Fixed event type `battery_accepted`                                                            |
-| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                              |
-| `created_at`         | Date-time indicating when the gateway created the event                                        |
+| `event_type`         | Fixed event type `battery_accepted`                                                           |
+| `battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                             |
+| `created_at`         | Date-time indicating when the gateway created the event                                       |
 
 The accepted event carries only the information the processor needs to
 validate and classify the battery reading. It does not define broker topics,
@@ -180,11 +180,10 @@ evidence.
 
 Failed states use a small fixed set of client-visible reasons:
 
-| Failure reason      | Meaning                                                                                |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| `processing_failed` | The accepted battery event did not produce a valid classification                      |
-| `follow_up_failed`  | The classification did not produce a valid workflow outcome                            |
-| `result_rejected`   | The gateway received a workflow result that it could not accept as the completed state |
+| Failure reason     | Meaning                                                                                |
+| ------------------ | -------------------------------------------------------------------------------------- |
+| `follow_up_failed` | The classification did not produce a valid workflow outcome                            |
+| `result_rejected`  | The gateway received a workflow result that it could not accept as the completed state |
 
 These reasons describe where the lifecycle stopped without exposing an internal
 error message. Detailed diagnostic evidence belongs in each service's future
@@ -240,8 +239,7 @@ valid records also describe one consistent workflow from submission through
 the final client-visible state.
 
 The lifecycle validator checks that a workflow preserves its lifecycle ID,
-device ID, and battery percentage; assigns a distinct event ID to each event;
-preserves the processor classification through the worker outcome; and makes
+device ID, and battery percentage; assigns a distinct event ID to each event; and makes
 the final client-visible state agree with that outcome. Valid fixtures cover
 completed and failed workflows for every battery classification. Invalid
 fixtures isolate one broken cross-stage relationship while keeping every
