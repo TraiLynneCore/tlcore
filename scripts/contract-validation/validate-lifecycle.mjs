@@ -240,6 +240,22 @@ const lifecycles = [
       finalStatusConsistent: true,
     },
   },
+  {
+    name: "battery-lifecycle-missing-stage.invalid.json",
+    expected: {
+      lifecycleIdConsistent: false,
+      eventIdsUnique: false,
+      percentageConsistent: false,
+      deviceIdConsistent: false,
+      submissionStatus: false,
+      acceptanceStatus: false,
+      acceptanceEventStatus: false,
+      classificationEventStatus: false,
+      outcomeEventStatus: false,
+      statusStatus: false,
+      finalStatusConsistent: false,
+    },
+  },
 ];
 
 function validateLifecycleId(lifecycle) {
@@ -313,10 +329,41 @@ function validateFinalStatusConsistency(lifecycle) {
   return outcomeEvent.failure_reason === finalStatus.failure_reason;
 }
 
+function hasValidLifecycleStructure(lifecycle) {
+  return (
+    Array.isArray(lifecycle) &&
+    lifecycle.length === 6 &&
+    lifecycle.every(
+      (stage) =>
+        stage !== null && typeof stage === "object" && !Array.isArray(stage),
+    )
+  );
+}
+
+function createInvalidLifecycleResult() {
+  return {
+    lifecycleIdConsistent: false,
+    eventIdsUnique: false,
+    percentageConsistent: false,
+    deviceIdConsistent: false,
+    submissionStatus: false,
+    acceptanceStatus: false,
+    acceptanceEventStatus: false,
+    classificationEventStatus: false,
+    outcomeEventStatus: false,
+    statusStatus: false,
+    finalStatusConsistent: false,
+  };
+}
+
 function validateLifecycle(lifecycleFile) {
   const lifecycle = loadJson(
     `./docs/contracts/examples/lifecycles/${lifecycleFile}`,
   );
+
+  if (!hasValidLifecycleStructure(lifecycle)) {
+    return createInvalidLifecycleResult();
+  }
 
   return {
     lifecycleIdConsistent: validateLifecycleId(lifecycle),
