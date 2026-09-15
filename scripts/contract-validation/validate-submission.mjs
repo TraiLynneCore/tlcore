@@ -44,6 +44,18 @@ const fixtureRegistration = [
     name: "battery-submission.unsupported-source-type.invalid",
     expectedValid: false,
   },
+  {
+    name: "battery-submission.missing-occurrence-time.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.malformed-date-time.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-timezone.invalid",
+    expectedValid: false,
+  },
 ];
 
 export default function validateSubmission() {
