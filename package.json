@@ -6,7 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "node scripts/validate-contracts.mjs"
+    "test": "echo \"Error: Contract validation is being rebuilt for Issue #7\" && exit 1"
   },
   "repository": {
     "type": "git",
