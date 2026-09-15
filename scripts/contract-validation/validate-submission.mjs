@@ -16,11 +16,21 @@ const fixtureRegistration = [
     name: "battery-submission.valid",
     expectedValid: true,
   },
+  { name: "battery-submission.missing-event-id.invalid", expectedValid: false },
+  { name: "battery-submission.invalid-event-id.invalid", expectedValid: false },
+  {
+    name: "battery-submission.missing-event-type.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.unsupported-event.type.invalid",
+    expectedValid: false,
+  },
 ];
 
 export default function validateSubmission() {
   checkFixtureRegistration(
-    "./docs/contracts/examples/http/",
+    "./docs/contracts/examples/http",
     "battery-submission",
     fixtureRegistration,
   );
