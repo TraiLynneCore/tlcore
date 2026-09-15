@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "urn:tlcore:contracts:event-envelope#/$defs/incoming",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "const": "battery.level_reported"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "device"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": ["battery_percentage"],
+      "additionalProperties": false
+    }
+  },
+  "unevaluatedProperties": false
+}
