@@ -33,18 +33,18 @@ identifier to request the latest state later.
 ### Battery submission
 
 The simulated client submits one object following
-`battery-submission.schema.json`. The
+[battery-submission.schema.json](http/battery-submission.schema.json). The
 gateway owns validation of this request before it accepts or publishes
 anything.
 
-| Field | Meaning and owner |
-| --- | --- |
-| `event_id` | UUID-formatted identifier created by the simulated client for the original reading |
-| `event_type` | Fixed input type `battery.level_reported` |
-| `source.id` | Nonblank simulated source identifier supplied by the client |
-| `source.type` | Fixed Phase 1 source type `device` |
-| `occurred_at` | Date-time supplied by the client for when the original reading happened |
-| `data.battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive |
+| Field                     | Meaning and owner                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| `event_id`                | UUID-formatted identifier created by the simulated client for the original reading |
+| `event_type`              | Fixed input type `battery.level_reported`                                          |
+| `source.id`               | Nonblank simulated source identifier supplied by the client                        |
+| `source.type`             | Fixed Phase 1 source type `device`                                                 |
+| `occurred_at`             | Date-time supplied by the client for when the original reading happened            |
+| `data.battery_percentage` | Whole-number battery percentage from `0` through `100`, inclusive                  |
 
 For example:
 
@@ -148,14 +148,14 @@ reject undeclared outer and payload fields.
 
 ## Record ownership
 
-| Record | Producer / owner | Consumer and meaning |
-| --- | --- | --- |
-| Submission | Simulated client | Gateway validates the identified reading before admission |
-| Acceptance response | Gateway | Client receives the new lifecycle ID and `pending` state |
-| Accepted event | Gateway | Processor receives the original reading enriched with lifecycle context |
-| Classification event | Python processor | Worker receives the battery classification and original context |
-| Outcome event | Ruby worker | Gateway receives the simulated workflow result and original context |
-| Latest-status response | Gateway | Client receives the correlated lifecycle state |
+| Record                 | Producer / owner | Consumer and meaning                                                    |
+| ---------------------- | ---------------- | ----------------------------------------------------------------------- |
+| Submission             | Simulated client | Gateway validates the identified reading before admission               |
+| Acceptance response    | Gateway          | Client receives the new lifecycle ID and `pending` state                |
+| Accepted event         | Gateway          | Processor receives the original reading enriched with lifecycle context |
+| Classification event   | Python processor | Worker receives the battery classification and original context         |
+| Outcome event          | Ruby worker      | Gateway receives the simulated workflow result and original context     |
+| Latest-status response | Gateway          | Client receives the correlated lifecycle state                          |
 
 The input and accepted record use `battery.level_reported`; the classification
 and outcome types describe internal stages of that same supported battery
@@ -179,13 +179,13 @@ processor or worker data directly.
 
 ## Identifiers
 
-| Identifier | Meaning and rule |
-| --- | --- |
-| `source.id` | Identifies the simulated device; supplied by the client and preserved across events and returned status |
-| Original `event_id` | Created by the client for the reading and retained in the accepted event |
-| `lifecycle_id` | Created once by the gateway on acceptance; preserved across acceptance, every event, and status |
-| Result `event_id` | Created by Python for classification and by Ruby for outcome; distinct from the original event ID, each other, and the lifecycle ID |
-| `original_event_id` | Carried by classification, outcome, and status; equals the submitted event ID |
+| Identifier          | Meaning and rule                                                                                                                    |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `source.id`         | Identifies the simulated device; supplied by the client and preserved across events and returned status                             |
+| Original `event_id` | Created by the client for the reading and retained in the accepted event                                                            |
+| `lifecycle_id`      | Created once by the gateway on acceptance; preserved across acceptance, every event, and status                                     |
+| Result `event_id`   | Created by Python for classification and by Ruby for outcome; distinct from the original event ID, each other, and the lifecycle ID |
+| `original_event_id` | Carried by classification, outcome, and status; equals the submitted event ID                                                       |
 
 Event and lifecycle identifiers are UUID-formatted strings. The original event
 ID must also differ from the lifecycle ID. These relationships provide
