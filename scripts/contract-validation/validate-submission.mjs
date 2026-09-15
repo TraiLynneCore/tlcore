@@ -26,6 +26,24 @@ const fixtureRegistration = [
     name: "battery-submission.unsupported-event.type.invalid",
     expectedValid: false,
   },
+  { name: "battery-submission.missing-source.invalid", expectedValid: false },
+  { name: "battery-submission.null-source.invalid", expectedValid: false },
+  {
+    name: "battery-submission.missing-source-id.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.blank-source-id.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-source-type.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.unsupported-source-type.invalid",
+    expectedValid: false,
+  },
 ];
 
 export default function validateSubmission() {
