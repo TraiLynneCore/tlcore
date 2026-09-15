@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tlcore:contracts:event-envelope",
+  "type": "object",
+  "properties": {
+    "lifecycle_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      },
+      "required": ["id", "type"],
+      "additionalProperties": false
+    },
+    "incoming": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "event_type": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": ["event_id", "event_type", "source", "occurred_at", "data"]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/incoming"
+    }
+  ],
+  "required": ["lifecycle_id"]
+}
