@@ -1,129 +1,156 @@
 import {
   checkFixture,
-  checkFixtureRegistration,
   createContractAjv,
   loadJson,
-} from "./helpers.mjs";
-
-const ajv = createContractAjv();
-
-const batterySubmissionSchema = loadJson(
-  "./docs/contracts/http/battery-submission.schema.json",
-);
+} from "./helpers/helpers.mjs";
+import { checkFixtureRegistration } from "./helpers/validate-fixture-registration.mjs";
 
 const fixtureRegistration = [
   {
-    name: "battery-submission.valid",
-    expectedValid: true,
-  },
-  { name: "battery-submission.missing-event-id.invalid", expectedValid: false },
-  { name: "battery-submission.invalid-event-id.invalid", expectedValid: false },
-  {
-    name: "battery-submission.missing-event-type.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.unsupported-event.type.invalid",
-    expectedValid: false,
-  },
-  { name: "battery-submission.missing-source.invalid", expectedValid: false },
-  { name: "battery-submission.null-source.invalid", expectedValid: false },
-  {
-    name: "battery-submission.missing-source-id.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.blank-source-id.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.missing-source-type.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.unsupported-source-type.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.missing-occurrence-time.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.malformed-date-time.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.missing-timezone.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.missing-data.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.null-data.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.missing-percentage.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.fractional-percentage.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.numeric-string-percentage.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.percentage-below-zero.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.percentage-above-100.invalid",
-    expectedValid: false,
-  },
-  {
-    name: "battery-submission.percentage-at-0.valid",
+    name: "battery-submission.valid.json",
     expectedValid: true,
   },
   {
-    name: "battery-submission.percentage-at-100.valid",
+    name: "battery-submission.missing-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.invalid-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-event-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.unsupported-event-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-source.invalid.json",
+    expectedValid: false,
+  },
+  { name: "battery-submission.null-source.invalid.json", expectedValid: false },
+  {
+    name: "battery-submission.missing-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.blank-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.unsupported-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.malformed-date-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-timezone.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-data.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.null-data.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.fractional-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.numeric-string-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.percentage-below-zero.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.percentage-above-100.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.percentage-at-0.valid.json",
     expectedValid: true,
   },
   {
-    name: "battery-submission.extra-outer-property.invalid",
+    name: "battery-submission.percentage-at-100.valid.json",
+    expectedValid: true,
+  },
+  {
+    name: "battery-submission.extra-outer-property.invalid.json",
     expectedValid: false,
   },
   {
-    name: "battery-submission.extra-source-property.invalid",
+    name: "battery-submission.extra-source-property.invalid.json",
     expectedValid: false,
   },
   {
-    name: "battery-submission.extra-data-property.invalid",
+    name: "battery-submission.extra-data-property.invalid.json",
     expectedValid: false,
   },
   {
-    name: "battery-submission.client-supplied-lifecycle-id.invalid",
+    name: "battery-submission.client-supplied-lifecycle-id.invalid.json",
     expectedValid: false,
   },
 ];
 
 export default function validateSubmission() {
+  console.log("[TLCore] Starting submission validation...");
+
+  const ajv = createContractAjv();
+
+  const batterySubmissionSchema = loadJson(
+    "./docs/contracts/http/battery-submission.schema.json",
+  );
+
   checkFixtureRegistration(
     "./docs/contracts/examples/http",
     "battery-submission",
     fixtureRegistration,
   );
 
+  const validate = ajv.compile(batterySubmissionSchema);
+
   for (const fixture of fixtureRegistration) {
     const { name, expectedValid } = fixture;
     const data = loadJson(
-      `./docs/contracts/examples/http/battery-submission/${name}.json`,
+      `./docs/contracts/examples/http/battery-submission/${name}`,
     );
-    const validate = ajv.compile(batterySubmissionSchema);
 
     checkFixture(name, validate, data, expectedValid);
   }
+
+  const validateIncoming = ajv.compile({
+    $ref: "urn:tlcore:contracts:event-envelope#/$defs/incoming",
+  });
+
+  const data = loadJson(
+    "./docs/contracts/examples/http/battery-submission/battery-submission.unsupported-event-type.invalid.json",
+  );
+
+  checkFixture(
+    "shared incoming accepts a general event type",
+    validateIncoming,
+    data,
+    true,
+  );
 }

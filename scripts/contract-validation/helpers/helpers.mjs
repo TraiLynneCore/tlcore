@@ -3,8 +3,15 @@ import Ajv2020 from "ajv/dist/2020.js";
 import { readFileSync } from "node:fs";
 
 export const loadJson = (path) => {
-  const fileContent = readFileSync(path, "utf-8");
-  return JSON.parse(fileContent);
+  try {
+    const fileContent = readFileSync(path, "utf-8");
+    return JSON.parse(fileContent);
+  } catch (error) {
+    throw new Error(
+      `Failed to load JSON from path: ${path}: ${error.message}`,
+      { cause: error },
+    );
+  }
 };
 
 export const createContractAjv = () => {
@@ -33,20 +40,4 @@ export const checkFixture = (name, validate, data, expectedValid) => {
   console.log(`PASS ${name}`);
 
   return;
-};
-
-export const checkFixtureRegistration = (directory, prefix, fixtures) => {
-  fixtures.forEach((fixture) => {
-    const { name } = fixture;
-    let fixtureData = loadJson(`${directory}/${prefix}/${name}.json`);
-
-    if (!fixtureData) {
-      console.error(`FAIL ${name} could not be loaded`);
-      process.exitCode = 1;
-      return;
-    }
-  });
-
-  console.log(`Checked ${fixtures.length} fixtures`);
-  return fixtures;
 };
