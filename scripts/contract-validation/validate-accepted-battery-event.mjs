@@ -128,6 +128,10 @@ const fixtureRegistration = [
     name: "accepted-battery-event.extra-field.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "accepted-battery-event.matching-event-and-lifecycle-ids.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateAcceptedBatteryEvent() {
