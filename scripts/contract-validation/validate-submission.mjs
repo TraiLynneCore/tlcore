@@ -56,6 +56,34 @@ const fixtureRegistration = [
     name: "battery-submission.missing-timezone.invalid",
     expectedValid: false,
   },
+  {
+    name: "battery-submission.missing-data.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.null-data.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.missing-percentage.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.fractional-percentage.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.numeric-string-percentage.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.percentage-below-zero.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.percentage-above-100.invalid",
+    expectedValid: false,
+  },
 ];
 
 export default function validateSubmission() {
