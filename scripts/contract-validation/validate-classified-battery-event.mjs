@@ -115,6 +115,22 @@ const fixtureRegistration = [
     name: "classified-battery-event.extra-source-field.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "classified-battery-event.malformed-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.missing-timezone-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.malformed-created-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.missing-timezone-created-time.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateClassifiedBatteryEvent() {
