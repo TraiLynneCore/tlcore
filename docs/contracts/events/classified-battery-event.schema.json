@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tlcore:contracts:events:classified-battery-event",
+  "$ref": "urn:tlcore:contracts:event-envelope",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "const": "battery.classified"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "device"
+        }
+      }
+    },
+    "original_event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": ["battery_percentage"],
+      "additionalProperties": false
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["original_event_id", "created_at"],
+  "unevaluatedProperties": false
+}
