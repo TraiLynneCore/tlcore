@@ -1,10 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:tlcore:contracts:battery-submission",
-  "$ref": "urn:tlcore:contracts:event-envelope#/$defs/incoming",
+  "$id": "urn:tlcore:contracts:events:accepted-battery-event",
+  "$ref": "urn:tlcore:contracts:event-envelope",
   "type": "object",
   "properties": {
     "event_type": {
+      "type": "string",
       "const": "battery.level_reported"
     },
     "source": {
@@ -14,6 +15,10 @@
           "const": "device"
         }
       }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
     },
     "data": {
       "type": "object",
@@ -28,5 +33,6 @@
       "additionalProperties": false
     }
   },
+  "required": ["created_at"],
   "unevaluatedProperties": false
 }
