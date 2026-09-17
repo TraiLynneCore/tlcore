@@ -79,6 +79,18 @@ const fixtureRegistration = [
     name: "classified-battery-event.missing-data.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "classified-battery-event.malformed-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.malformed-original-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.malformed-lifecycle-id.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateClassifiedBatteryEvent() {
