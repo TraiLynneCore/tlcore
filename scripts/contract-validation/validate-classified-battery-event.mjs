@@ -131,6 +131,42 @@ const fixtureRegistration = [
     name: "classified-battery-event.missing-timezone-created-time.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "classified-battery-event.null-data.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.missing-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.missing-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.unsupported-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.fractional-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.numeric-string-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.percentage-below-0.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.percentage-above-100.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.extra-data-field.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateClassifiedBatteryEvent() {
