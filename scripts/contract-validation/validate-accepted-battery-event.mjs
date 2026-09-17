@@ -52,6 +52,22 @@ const fixtureRegistration = [
     name: "accepted-battery-event.malformed-event-id.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "accepted-battery-event.malformed-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.malformed-created-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.occurrence-time-without-timezone.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.created-time-without-timezone.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateAcceptedBatteryEvent() {
