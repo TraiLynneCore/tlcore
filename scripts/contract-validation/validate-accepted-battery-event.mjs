@@ -16,6 +16,34 @@ const fixtureRegistration = [
     name: "accepted-battery-event.percentage-at-100.valid.json",
     expectedValid: true,
   },
+  {
+    name: "accepted-battery-event.missing-lifecycle-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-event-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-source.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-created-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-data.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateAcceptedBatteryEvent() {
