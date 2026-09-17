@@ -31,6 +31,22 @@ const fixtureRegistration = [
     name: "classified-battery-event.normal.percentage-100.valid.json",
     expectedValid: true,
   },
+  {
+    name: "classified-battery-event.low.percentage-10.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.critical.percentage-11.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.normal.percentage-20.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.low.percentage-21.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateClassifiedBatteryEvent() {
