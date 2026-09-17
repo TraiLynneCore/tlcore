@@ -8,27 +8,27 @@ import { checkFixtureRegistration } from "./helpers/validate-fixture-registratio
 
 const fixtureRegistration = [
   {
-    name: "classified-battery-event.percentage-0-critical.valid.json",
+    name: "classified-battery-event.critical.percentage-0.valid.json",
     expectedValid: true,
   },
   {
-    name: "classified-battery-event.percentage-10-critical.valid.json",
+    name: "classified-battery-event.critical.percentage-10.valid.json",
     expectedValid: true,
   },
   {
-    name: "classified-battery-event.percentage-11-low.valid.json",
+    name: "classified-battery-event.low.percentage-11.valid.json",
     expectedValid: true,
   },
   {
-    name: "classified-battery-event.percentage-20-low.valid.json",
+    name: "classified-battery-event.low.percentage-20.valid.json",
     expectedValid: true,
   },
   {
-    name: "classified-battery-event.percentage-21-normal.valid.json",
+    name: "classified-battery-event.normal.percentage-21.valid.json",
     expectedValid: true,
   },
   {
-    name: "classified-battery-event.percentage-100-normal.valid.json",
+    name: "classified-battery-event.normal.percentage-100.valid.json",
     expectedValid: true,
   },
 ];
