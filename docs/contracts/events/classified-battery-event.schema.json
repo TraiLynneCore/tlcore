@@ -27,9 +27,51 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 100
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["normal", "low", "critical"]
         }
       },
-      "required": ["battery_percentage"],
+      "oneOf": [
+        {
+          "properties": {
+            "battery_percentage": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 21
+            },
+            "classification": {
+              "const": "normal"
+            }
+          }
+        },
+        {
+          "properties": {
+            "battery_percentage": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 11
+            },
+            "classification": {
+              "const": "low"
+            }
+          }
+        },
+        {
+          "properties": {
+            "battery_percentage": {
+              "type": "integer",
+              "maximum": 10,
+              "minimum": 0
+            },
+            "classification": {
+              "const": "critical"
+            }
+          }
+        }
+      ],
+      "required": ["battery_percentage", "classification"],
       "additionalProperties": false
     },
     "created_at": {
