@@ -84,6 +84,30 @@ const fixtureRegistration = [
     name: "battery-submission.percentage-above-100.invalid",
     expectedValid: false,
   },
+  {
+    name: "battery-submission.percentage-at-0.valid",
+    expectedValid: true,
+  },
+  {
+    name: "battery-submission.percentage-at-100.valid",
+    expectedValid: true,
+  },
+  {
+    name: "battery-submission.extra-outer-property.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.extra-source-property.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.extra-data-property.invalid",
+    expectedValid: false,
+  },
+  {
+    name: "battery-submission.client-supplied-lifecycle-id.invalid",
+    expectedValid: false,
+  },
 ];
 
 export default function validateSubmission() {
