@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tlcore:contracts:battery-acceptance",
+  "type": "object",
+  "properties": {
+    "lifecycle_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "state": {
+      "type": "string",
+      "const": "pending"
+    }
+  },
+  "required": ["lifecycle_id", "state"],
+  "additionalProperties": false
+}
