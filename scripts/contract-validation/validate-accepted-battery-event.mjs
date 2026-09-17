@@ -72,6 +72,30 @@ const fixtureRegistration = [
     name: "accepted-battery-event.unsupported-event-type.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "accepted-battery-event.null-source.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.blank-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.missing-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.unsupported-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "accepted-battery-event.extra-source-field.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateAcceptedBatteryEvent() {
