@@ -134,13 +134,13 @@ the percentage and classification must match the defined thresholds.
 
 After handling a classified battery event, the Ruby worker publishes an
 outcome battery event for the gateway. The event follows
-`outcome-battery-event.schema.json`.
+[`outcome-battery-event.schema.json`](events/outcome-battery-event.schema.json).
 Its `event_type` is `battery.workflow_outcome`. The worker creates a new
 `event_id` and its own `created_at`, preserving the lifecycle, original-event,
 source, and occurrence-time context.
 
 Its strict `data` object contains `battery_percentage`, `classification`, and
-`state`. A `completed` outcome additionally requires the matching
+`worker_state`. A `completed` outcome additionally requires the matching
 `worker_outcome` and forbids `failure_reason`. A `failed` outcome requires
 `failure_reason: "follow_up_failed"` and forbids `worker_outcome`. In both
 states, classification must match the percentage. All three event contracts
