@@ -227,6 +227,22 @@ const fixtureRegistration = [
     name: "outcome-battery-event.extra-source-field.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.malformed-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.occurrence-time-without-timezone.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.malformed-created-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.created-time-without-timezone.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
