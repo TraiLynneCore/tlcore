@@ -115,6 +115,38 @@ const fixtureRegistration = [
     name: "outcome-battery-event.unsupported-failure-reason.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.completed.low.percentage-10.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.low.percentage-10.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.critical.percentage-11.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.critical.percentage-11.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.normal.percentage-20.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.normal.percentage-20.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.low.percentage-21.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.low.percentage-21.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
