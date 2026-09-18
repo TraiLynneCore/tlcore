@@ -9,7 +9,7 @@
   },
   "occurred_at": "2024-06-01T12:00:00Z",
   "data": {
-    "battery_percentage": 20.5,
+    "battery_percentage": 19.5,
     "classification": "low",
     "worker_state": "failed",
     "failure_reason": "follow_up_failed"

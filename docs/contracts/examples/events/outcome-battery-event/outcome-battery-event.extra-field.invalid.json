@@ -12,8 +12,8 @@
     "battery_percentage": 10,
     "classification": "critical",
     "worker_state": "failed",
-    "failure_reason": "follow_up_failed",
-    "extra_field": "this should not be here"
+    "failure_reason": "follow_up_failed"
   },
+  "extra_field": "this should not be here",
   "created_at": "2024-06-01T12:00:01Z"
 }

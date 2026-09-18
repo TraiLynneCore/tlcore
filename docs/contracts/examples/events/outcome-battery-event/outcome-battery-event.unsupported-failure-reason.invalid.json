@@ -12,7 +12,7 @@
     "battery_percentage": 21,
     "classification": "normal",
     "worker_state": "failed",
-    "failure_reason": "unsupported_failure_reason"
+    "failure_reason": "result_rejected"
   },
   "created_at": "2024-06-01T12:00:01Z"
 }
