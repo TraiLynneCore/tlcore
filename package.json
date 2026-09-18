@@ -6,7 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "node ./scripts/contract-validation.mjs"
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "private": true,
   "devDependencies": {
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "jest": "^30.5.2"
   }
 }
