@@ -243,6 +243,54 @@ const fixtureRegistration = [
     name: "outcome-battery-event.created-time-without-timezone.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.null-data.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.missing-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.missing-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.missing-state.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.unsupported-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.fractional-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.numeric-string-percentage.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.percentage-below-0.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.percentage-above-100.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.extra-data-field.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.wrong-stage-event-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.extra-field.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
