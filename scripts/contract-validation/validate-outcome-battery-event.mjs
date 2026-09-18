@@ -43,6 +43,22 @@ const fixtureRegistration = [
     name: "outcome-battery-event.failed.normal.percentage-21.valid.json",
     expectedValid: true,
   },
+  {
+    name: "outcome-battery-event.completed.critical.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.low.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.normal.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.unsupported-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
