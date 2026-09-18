@@ -201,7 +201,31 @@ const fixtureRegistration = [
   },
   {
     name: "outcome-battery-event.matching-original-event-and-lifecycle-ids.invalid.json",
-    expectedValid: true,
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.null-source.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.missing-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.blank-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.missing-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.unsupported-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.extra-source-field.invalid.json",
+    expectedValid: false,
   },
 ];
 
