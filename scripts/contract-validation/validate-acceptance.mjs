@@ -6,14 +6,13 @@ import {
 import { checkFixtureRegistration } from "./helpers/validate-fixture-registration.mjs";
 
 const fixtureRegistration = [
+  // Valid response
   {
     name: "battery-acceptance.valid.json",
     expectedValid: true,
   },
-  {
-    name: "battery-acceptance.missing-state.invalid.json",
-    expectedValid: false,
-  },
+
+  // Lifecycle ID
   {
     name: "battery-acceptance.missing-lifecycle-id.invalid.json",
     expectedValid: false,
@@ -22,10 +21,18 @@ const fixtureRegistration = [
     name: "battery-acceptance.malformed-lifecycle-id.invalid.json",
     expectedValid: false,
   },
+
+  // State
+  {
+    name: "battery-acceptance.missing-state.invalid.json",
+    expectedValid: false,
+  },
   {
     name: "battery-acceptance.non-pending-state.invalid.json",
     expectedValid: false,
   },
+
+  // Extra fields
   {
     name: "battery-acceptance.extra-field.invalid.json",
     expectedValid: false,
@@ -33,7 +40,7 @@ const fixtureRegistration = [
 ];
 
 export default function validateAcceptance() {
-  console.log("[TLCore] Starting acceptance validation...");
+  console.log("[TLCore] Starting Battery Acceptance validation...");
 
   const ajv = createContractAjv();
 
