@@ -107,6 +107,14 @@ const fixtureRegistration = [
     name: "outcome-battery-event.failed.normal.with-worker-outcome.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.unsupported-state.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.unsupported-failure-reason.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
