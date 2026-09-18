@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tlcore:contracts:events:outcome-battery-event",
+  "$ref": "urn:tlcore:contracts:event-envelope",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "const": "battery.workflow_outcome"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "device"
+        }
+      }
+    },
+    "original_event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["original_event_id", "created_at"],
+  "unevaluatedProperties": false
+}
