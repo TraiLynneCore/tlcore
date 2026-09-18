@@ -123,8 +123,8 @@ delivery guarantees, retries, or duplicate-event handling.
 
 After processing an accepted battery event, the Python processor publishes a
 classified battery event for the Ruby worker. The event follows
-`classified-battery-event.schema.json`.
-Its `event_type` is `battery_classified`. The processor creates a new
+[`classified-battery-event.schema.json`](events/classified-battery-event.schema.json).
+Its `event_type` is `battery.classified`. The processor creates a new
 `event_id` and its own `created_at`, preserves `lifecycle_id`, `source`, and
 `occurred_at`, and sets `original_event_id` to the submitted event ID.
 Its strict `data` object contains `battery_percentage` and `classification`;
@@ -135,7 +135,7 @@ the percentage and classification must match the defined thresholds.
 After handling a classified battery event, the Ruby worker publishes an
 outcome battery event for the gateway. The event follows
 `outcome-battery-event.schema.json`.
-Its `event_type` is `battery_workflow_outcome`. The worker creates a new
+Its `event_type` is `battery.workflow_outcome`. The worker creates a new
 `event_id` and its own `created_at`, preserving the lifecycle, original-event,
 source, and occurrence-time context.
 

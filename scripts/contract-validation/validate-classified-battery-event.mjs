@@ -175,6 +175,18 @@ const fixtureRegistration = [
     name: "classified-battery-event.extra-outer-field.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "classified-battery-event.matching-event-and-lifecycle-ids.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.matching-event-and-original-event-ids.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "classified-battery-event.matching-original-event-and-lifecycle-ids.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateClassifiedBatteryEvent() {
