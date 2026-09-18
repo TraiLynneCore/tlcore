@@ -59,6 +59,54 @@ const fixtureRegistration = [
     name: "outcome-battery-event.completed.unsupported-worker-outcome.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.completed.critical.missing-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.critical.with-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.critical.missing-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.critical.with-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.low.missing-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.low.with-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.low.missing-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.low.with-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.normal.missing-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.completed.normal.with-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.normal.missing-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.failed.normal.with-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
