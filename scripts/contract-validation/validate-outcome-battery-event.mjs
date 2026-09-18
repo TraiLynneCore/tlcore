@@ -191,6 +191,18 @@ const fixtureRegistration = [
     name: "outcome-battery-event.malformed-lifecycle-id.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "outcome-battery-event.matching-event-and-lifecycle-ids.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.matching-event-and-original-event-ids.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "outcome-battery-event.matching-original-event-and-lifecycle-ids.invalid.json",
+    expectedValid: true,
+  },
 ];
 
 export default function validateOutcomeBatteryEvent() {
