@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tlcore:contracts:battery-status",
+  "type": "object",
+  "properties": {
+    "lifecycle_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "original_event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "event_type": {
+      "type": "string",
+      "const": "battery.level_reported"
+    },
+    "source": {
+      "type": "object",
+      "$ref": "urn:tlcore:contracts:event-envelope#/$defs/source",
+      "properties": {
+        "type": {
+          "const": "device"
+        }
+      }
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state": {
+      "type": "string",
+      "enum": ["pending", "completed", "failed"]
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["normal", "low", "critical"]
+    },
+    "worker_outcome": {
+      "type": "string",
+      "enum": [
+        "urgent_follow_up_completed",
+        "routine_follow_up_completed",
+        "no_action_required"
+      ]
+    },
+    "failure_reason": {
+      "type": "string",
+      "enum": ["follow_up_failed", "result_rejected"]
+    }
+  },
+  "required": [
+    "lifecycle_id",
+    "original_event_id",
+    "event_type",
+    "source",
+    "occurred_at",
+    "state"
+  ],
+  "additionalProperties": false
+}
