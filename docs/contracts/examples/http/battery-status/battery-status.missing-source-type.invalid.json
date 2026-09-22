@@ -1,0 +1,12 @@
+{
+  "lifecycle_id": "123e4567-e89b-12d3-a456-426614174000",
+  "original_event_id": "123e4567-e89b-12d3-a456-426614174001",
+  "event_type": "battery.level_reported",
+  "source": {
+    "id": "sim-device-001"
+  },
+  "occurred_at": "2024-06-01T12:00:00Z",
+  "state": "completed",
+  "classification": "normal",
+  "worker_outcome": "no_action_required"
+}

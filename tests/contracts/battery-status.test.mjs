@@ -52,6 +52,34 @@ const fixtureRegistration = [
     name: "battery-status.unsupported-event-type.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.missing-source.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.null-source.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.missing-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.blank-source-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.missing-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.unsupported-source-type.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.extra-source-field.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
