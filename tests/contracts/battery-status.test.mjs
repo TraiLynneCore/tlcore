@@ -92,6 +92,14 @@ const fixtureRegistration = [
     name: "battery-status.occurrence-time-without-timezone.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.missing-state.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.unsupported-state.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
