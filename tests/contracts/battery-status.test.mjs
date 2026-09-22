@@ -80,6 +80,18 @@ const fixtureRegistration = [
     name: "battery-status.extra-source-field.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.missing-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.malformed-occurrence-time.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.occurrence-time-without-timezone.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
