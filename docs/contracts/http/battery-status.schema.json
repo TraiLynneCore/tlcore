@@ -49,6 +49,47 @@
       "enum": ["follow_up_failed", "result_rejected"]
     }
   },
+  "oneOf": [
+    {
+      "properties": {
+        "state": {
+          "const": "pending"
+        }
+      },
+      "not": {
+        "anyOf": [
+          { "required": ["classification"] },
+          { "required": ["worker_outcome"] },
+          { "required": ["failure_reason"] }
+        ]
+      }
+    },
+    {
+      "properties": {
+        "state": {
+          "const": "completed"
+        }
+      },
+      "required": ["classification", "worker_outcome"],
+      "not": {
+        "required": ["failure_reason"]
+      }
+    },
+    {
+      "properties": {
+        "state": {
+          "const": "failed"
+        }
+      },
+      "required": ["failure_reason"],
+      "not": {
+        "anyOf": [
+          { "required": ["classification"] },
+          { "required": ["worker_outcome"] }
+        ]
+      }
+    }
+  ],
   "required": [
     "lifecycle_id",
     "original_event_id",
