@@ -189,7 +189,20 @@ describe("Accepted battery events", () => {
   test.each(fixtureRegistration)("$name", ({ name, expectedValid }) => {
     const data = loadJson(`${fixtureDirectory}/${name}`);
 
-    expect(validate(data)).toBe(expectedValid);
+    const actualValid = validate(data);
+
+    if (actualValid !== expectedValid) {
+      const details = actualValid
+        ? "The validator accepted a fixture that should have been rejected."
+        : JSON.stringify(validate.errors, null, 2);
+
+      throw new Error(
+        `Fixture: ${name}\n` +
+          `Expected: ${expectedValid ? "accepted" : "rejected"}\n` +
+          `Received: ${actualValid ? "accepted" : "rejected"}\n` +
+          `Details: ${details}`,
+      );
+    }
   });
   test("matching IDs pass the schema but fail the identity check", () => {
     const data = loadJson(
