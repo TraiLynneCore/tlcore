@@ -28,6 +28,22 @@ const fixtureRegistration = [
     name: "battery-status.failed.result-rejected.valid.json",
     expectedValid: true,
   },
+  {
+    name: "battery-status.missing-lifecycle-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.malformed-lifecycle-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.missing-original-event-id.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.malformed-original-event-id.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
