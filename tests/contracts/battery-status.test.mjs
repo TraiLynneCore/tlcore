@@ -100,6 +100,18 @@ const fixtureRegistration = [
     name: "battery-status.unsupported-state.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.pending.with-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.pending.with-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.pending.with-failure-reason.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
