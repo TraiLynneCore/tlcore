@@ -1,10 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
 import { readdirSync } from "node:fs";
-import createEventValidator from "../../scripts/contract-validation/helpers/event-validator.mjs";
-import {
-  createContractAjv,
-  loadJson,
-} from "../../scripts/contract-validation/helpers/helpers.mjs";
+import createContractAjv from "../../scripts/helpers/create-contract-ajv.mjs";
+import createEventValidator from "../../scripts/helpers/event-validator.mjs";
+import loadJson from "../../scripts/helpers/load-json.mjs";
 
 const fixtureRegistration = [
   // Valid events and percentage boundaries

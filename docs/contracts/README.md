@@ -2,7 +2,7 @@
 
 **Status:** Planned Phase 1 contract.
 
-Schemas and automated validation are not yet available.
+Schemas and Jest validation cover battery submission, acceptance, accepted events, classification events, and worker outcomes. Run `npm test` from the repository root. Latest-status and lifecycle validation are still being built.
 
 This document defines the minimum shared behavior for TLCore's first working
 capability. It gives the simulated client, JavaScript gateway, Python

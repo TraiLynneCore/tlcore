@@ -1,10 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
 import { readdirSync } from "node:fs";
-import createEventValidator from "../../scripts/contract-validation/helpers/event-validator.mjs";
-import {
-  createContractAjv,
-  loadJson,
-} from "../../scripts/contract-validation/helpers/helpers.mjs";
+import createContractAjv from "../../scripts/helpers/create-contract-ajv.mjs";
+import createEventValidator from "../../scripts/helpers/event-validator.mjs";
+import loadJson from "../../scripts/helpers/load-json.mjs";
 
 const fixtureRegistration = [
   // Valid completed outcomes and classification boundaries
@@ -373,19 +371,28 @@ describe("Outcome battery events", () => {
 
     expect(validate(data)).toBe(expectedValid);
   });
-  test("matching IDs pass the schema but fail the identity check", () => {
-    const data = loadJson(
-      `${fixtureDirectory}/outcome-battery-event.matching-event-and-lifecycle-ids.invalid.json`,
-    );
+  const identityFixtures = [
+    "matching-event-and-lifecycle-ids",
+    "matching-event-and-original-event-ids",
+    "matching-original-event-and-lifecycle-ids",
+  ];
 
-    expect(schemaValidator(data)).toBe(true);
-    expect(validate(data)).toBe(false);
-    expect(validate.errors).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          keyword: "distinctIdentifiers",
-        }),
-      ]),
-    );
-  });
+  test.each(identityFixtures)(
+    "%s passes the schema but fails the identity check",
+    (caseName) => {
+      const data = loadJson(
+        `${fixtureDirectory}/outcome-battery-event.${caseName}.invalid.json`,
+      );
+
+      expect(schemaValidator(data)).toBe(true);
+      expect(validate(data)).toBe(false);
+      expect(validate.errors).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            keyword: "distinctIdentifiers",
+          }),
+        ]),
+      );
+    },
+  );
 });

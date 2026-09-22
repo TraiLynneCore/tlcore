@@ -1,9 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { readdirSync } from "fs";
-import {
-  createContractAjv,
-  loadJson,
-} from "../../scripts/contract-validation/helpers/helpers.mjs";
+import createContractAjv from "../../scripts/helpers/create-contract-ajv.mjs";
+import loadJson from "../../scripts/helpers/load-json.mjs";
 
 const fixtureRegistration = [
   // Valid submissions and percentage boundaries
@@ -167,5 +165,18 @@ describe("Battery submission", () => {
     );
 
     expect(validate(data)).toBe(expectedValid);
+  });
+
+  test("a general event type passes the shared envelope but fails battery submission", () => {
+    const validateIncoming = ajv.compile({
+      $ref: "urn:tlcore:contracts:event-envelope#/$defs/incoming",
+    });
+
+    const data = loadJson(
+      "./docs/contracts/examples/http/battery-submission/battery-submission.unsupported-event-type.invalid.json",
+    );
+
+    expect(validateIncoming(data)).toBe(true);
+    expect(validate(data)).toBe(false);
   });
 });

@@ -1,9 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
 import { readdirSync } from "fs";
-import {
-  createContractAjv,
-  loadJson,
-} from "../../scripts/contract-validation/helpers/helpers.mjs";
+import createContractAjv from "../../scripts/helpers/create-contract-ajv.mjs";
+import loadJson from "../../scripts/helpers/load-json.mjs";
 
 const fixtureRegistration = [
   // Valid response
