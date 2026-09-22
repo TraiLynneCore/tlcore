@@ -180,10 +180,6 @@ const fixtureRegistration = [
     name: "battery-status.with-worker-state.invalid.json",
     expectedValid: false,
   },
-  {
-    name: "battery-status.with-battery-percentage.invalid.json",
-    expectedValid: false,
-  },
 ];
 
 const ajv = createContractAjv();

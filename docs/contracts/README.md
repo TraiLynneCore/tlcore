@@ -2,7 +2,7 @@
 
 **Status:** Planned Phase 1 contract.
 
-Schemas and Jest validation cover battery submission, acceptance, accepted events, classification events, and worker outcomes. Run `npm test` from the repository root. Latest-status and lifecycle validation are still being built.
+Schemas and Jest validation cover battery submission, acceptance, accepted events, classification events, worker outcomes, and latest-status responses. Run `npm test` from the repository root. Lifecycle validation are still being built.
 
 This document defines the minimum shared behavior for TLCore's first working
 capability. It gives the simulated client, JavaScript gateway, Python
@@ -84,7 +84,7 @@ After validating a battery submission, the gateway accepts it for asynchronous
 processing and responds with HTTP `202 Accepted`.
 
 The response body follows
-`battery-acceptance.schema.json` and
+[`battery-acceptance.schema.json`](http/battery-acceptance.schema.json) and
 contains the lifecycle identifier and a `pending` state.
 
 HTTP `202 Accepted` means the gateway accepted the request for processing. It
@@ -96,7 +96,7 @@ worker outcome, and failure details do not belong in the acceptance response.
 The client later uses the lifecycle identifier from the acceptance response to
 retrieve the latest state. The gateway owns that client-visible query state and
 returns an object following
-`battery-status.schema.json`. A status can
+[`battery-status.schema.json`](http/battery-status.schema.json). A status can
 be `pending`, `completed`, or `failed`; their required details and meanings are
 defined in [Client-visible states](#client-visible-states).
 
@@ -107,7 +107,7 @@ defined in [Client-visible states](#client-visible-states).
 After accepting a valid battery submission, the JavaScript gateway publishes
 an accepted battery event for the Python processor to consume and validate.
 The event follows
-`accepted-battery-event.schema.json`.
+[`accepted-battery-event.schema.json`](events/accepted-battery-event.schema.json).
 
 The gateway preserves the submitted `event_id`, `event_type`, `source`,
 `occurred_at`, and `data`. It adds a UUID-formatted `lifecycle_id` and a
