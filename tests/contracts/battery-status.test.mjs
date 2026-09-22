@@ -112,6 +112,38 @@ const fixtureRegistration = [
     name: "battery-status.pending.with-failure-reason.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.completed.missing-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.missing-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.unsupported-classification.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.unsupported-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.with-failure-reason.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.critical.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.low.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
+  {
+    name: "battery-status.completed.normal.wrong-worker-outcome.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
