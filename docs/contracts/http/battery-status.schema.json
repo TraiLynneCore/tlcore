@@ -70,6 +70,38 @@
           "const": "completed"
         }
       },
+      "oneOf": [
+        {
+          "properties": {
+            "classification": {
+              "const": "critical"
+            },
+            "worker_outcome": {
+              "const": "urgent_follow_up_completed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "classification": {
+              "const": "low"
+            },
+            "worker_outcome": {
+              "const": "routine_follow_up_completed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "classification": {
+              "const": "normal"
+            },
+            "worker_outcome": {
+              "const": "no_action_required"
+            }
+          }
+        }
+      ],
       "required": ["classification", "worker_outcome"],
       "not": {
         "required": ["failure_reason"]
