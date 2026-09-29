@@ -1,20 +1,32 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Battery Submission Schema",
-  "description": "Schema for battery submission data",
+  "$id": "urn:tlcore:contracts:battery-submission",
+  "$ref": "urn:tlcore:contracts:event-envelope#/$defs/incoming",
   "type": "object",
   "properties": {
-    "device_id": {
-      "type": "string",
-      "description": "Simulated device identifier"
+    "event_type": {
+      "const": "battery.level_reported"
     },
-    "battery_percentage": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 100,
-      "description": "Battery percentage at the time of submission"
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "device"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "battery_percentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": ["battery_percentage"],
+      "additionalProperties": false
     }
   },
-  "required": ["device_id", "battery_percentage"],
-  "additionalProperties": false
+  "unevaluatedProperties": false
 }
