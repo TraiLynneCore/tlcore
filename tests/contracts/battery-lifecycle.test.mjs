@@ -5,20 +5,76 @@ import loadJson from "../../scripts/helpers/load-json.mjs";
 
 const lifecycleValidator = createLifecycleValidator();
 const lifecycleChecks = [
-  ["structureValid", "Structure is valid"],
-  ["submissionValid", "Submission is valid"],
-  ["acceptanceValid", "Acceptance is valid"],
-  ["acceptedEventValid", "Accepted event is valid"],
-  ["classifiedEventValid", "Classified event is valid"],
-  ["outcomeEventValid", "Outcome event is valid"],
-  ["statusValid", "Status is valid"],
-  ["lifecycleIdConsistent", "Lifecycle ID is consistent"],
-  ["originalEventIdConsistent", "Original event ID is consistent"],
-  ["eventIdsDistinct", "Event IDs are distinct"],
-  ["sourceConsistent", "Source is consistent"],
-  ["occurredAtConsistent", "Occurred at is consistent"],
-  ["percentageConsistent", "Percentage is consistent"],
-  ["finalResultConsistent", "Final result is consistent"],
+  [
+    "structureValid",
+    "recognizes the expected lifecycle structure",
+    "detects an invalid lifecycle structure",
+  ],
+  [
+    "submissionValid",
+    "accepts a valid submission",
+    "rejects an invalid submission",
+  ],
+  [
+    "acceptanceValid",
+    "accepts a valid acceptance response",
+    "rejects an invalid acceptance response",
+  ],
+  [
+    "acceptedEventValid",
+    "accepts a valid accepted event",
+    "rejects an invalid accepted event",
+  ],
+  [
+    "classifiedEventValid",
+    "accepts a valid classified event",
+    "rejects an invalid classified event",
+  ],
+  [
+    "outcomeEventValid",
+    "accepts a valid outcome event",
+    "rejects an invalid outcome event",
+  ],
+  [
+    "statusValid",
+    "accepts a valid status response",
+    "rejects an invalid status response",
+  ],
+  [
+    "lifecycleIdConsistent",
+    "finds matching lifecycle IDs",
+    "detects mismatched lifecycle IDs",
+  ],
+  [
+    "originalEventIdConsistent",
+    "finds matching original-event IDs and references",
+    "detects mismatched original-event IDs or references",
+  ],
+  [
+    "eventIdsDistinct",
+    "finds distinct event and lifecycle IDs",
+    "detects repeated event or lifecycle IDs",
+  ],
+  [
+    "sourceConsistent",
+    "finds matching source IDs and types",
+    "detects mismatched source IDs or types",
+  ],
+  [
+    "occurredAtConsistent",
+    "finds matching occurrence times",
+    "detects mismatched occurrence times",
+  ],
+  [
+    "percentageConsistent",
+    "finds matching battery percentages",
+    "detects mismatched battery percentages",
+  ],
+  [
+    "finalResultConsistent",
+    "finds agreement between outcome and final status",
+    "detects disagreement between outcome and final status",
+  ],
 ];
 
 const lifecycleRegistration = [
@@ -136,6 +192,25 @@ const lifecycleRegistration = [
       finalResultConsistent: true,
     },
   },
+  {
+    name: "battery-lifecycle.mismatched-lifecycle-id.invalid.json",
+    expectedChecks: {
+      structureValid: true,
+      submissionValid: true,
+      acceptanceValid: true,
+      acceptedEventValid: true,
+      classifiedEventValid: true,
+      outcomeEventValid: true,
+      statusValid: true,
+      lifecycleIdConsistent: false,
+      originalEventIdConsistent: true,
+      eventIdsDistinct: true,
+      sourceConsistent: true,
+      occurredAtConsistent: true,
+      percentageConsistent: true,
+      finalResultConsistent: true,
+    },
+  },
 ];
 
 const lifeCycleDirectory = "./docs/contracts/examples/lifecycle";
@@ -164,6 +239,12 @@ describe("Battery Lifecycle Validation", () => {
     ({ name, expectedChecks }) => {
       let result;
 
+      const checkCases = lifecycleChecks.map(([key, whenTrue, whenFalse]) => ({
+        key,
+        description: expectedChecks[key] ? whenTrue : whenFalse,
+        expected: expectedChecks[key],
+      }));
+
       beforeAll(() => {
         const lifecycle = loadJson(`${lifeCycleDirectory}/${name}`);
         result = lifecycleValidator(lifecycle);
@@ -176,10 +257,10 @@ describe("Battery Lifecycle Validation", () => {
         expect(Object.keys(expectedChecks).sort()).toEqual(checkNames);
       });
 
-      test.each(lifecycleChecks)("%s — %s", (key) => {
+      test.each(checkCases)("$key — $description", ({ key, expected }) => {
         expect(typeof result[key]).toBe("boolean");
-        expect(typeof expectedChecks[key]).toBe("boolean");
-        expect(result[key]).toBe(expectedChecks[key]);
+        expect(typeof expected).toBe("boolean");
+        expect(result[key]).toBe(expected);
       });
     },
   );
