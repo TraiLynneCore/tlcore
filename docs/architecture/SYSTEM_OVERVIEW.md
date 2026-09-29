@@ -12,7 +12,7 @@ This page describes the planned direction. The system has not been implemented y
 flowchart LR
     Client[Simulated client]
     Gateway[JavaScript gateway]
-    Broker[[Message broker]]
+    Broker[[RabbitMQ]]
     Processor[Python processor]
     Worker[Ruby worker]
 
@@ -42,10 +42,16 @@ flowchart LR
 | --- | --- |
 | Simulated client | Submit TLCore envelopes carrying simulated battery readings and request the latest processed state |
 | JavaScript gateway | Provide the external API, validate the TLCore envelope and supported battery payload, publish accepted events, and return the latest state |
-| Message broker | Carry events between independently running applications |
+| RabbitMQ | Carry events between independently running applications |
 | Python processor | Validate and classify battery levels as `normal`, `low`, or `critical` |
 | Ruby worker | Consume every classification, record a no-action result for `normal`, perform simulated follow-up for `low` and `critical`, and publish a workflow outcome |
 | PostgreSQL | Store application-owned processing and workflow state |
+
+RabbitMQ is the selected message broker, as recorded in
+[ADR-0003](../adr/0003-use-rabbitmq-as-message-broker.md). Local installation
+and operational validation are still pending. The decision selects the broker
+product; client-library versions, queue topology, and application delivery
+behavior remain to be defined and tested during implementation.
 
 Each application has one clear responsibility. The language boundaries are intentional because TLCore is also a place to practice operating and coordinating different application stacks.
 
@@ -87,7 +93,7 @@ This keeps application responsibilities clear without requiring multiple databas
 
 ## Phase 1 boundaries
 
-During Phase 1, the applications, message broker, and PostgreSQL will run directly on a local development machine.
+During Phase 1, the applications, RabbitMQ, and PostgreSQL will run directly on a local development machine.
 
 Phase 1 will use:
 
@@ -106,7 +112,6 @@ Containers, Kubernetes, cloud infrastructure, and real-device integrations belon
 Phase 1 work will decide:
 
 - Application frameworks and runtime versions.
-- The message-broker product.
 - Database libraries and migration tools.
 - Local startup and testing commands.
 

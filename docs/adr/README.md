@@ -6,10 +6,11 @@ ADRs are part of TLCore's learning record. They show how the project changed ove
 
 ## Decision index
 
-| ADR | Decision | Status |
-| --- | --- | --- |
-| [0001](0001-multi-repository-strategy.md) | Use separate repositories for independently deployable applications | Accepted |
-| [0002](0002-initial-event-driven-architecture.md) | Begin with an event-driven polyglot architecture | Accepted |
+| ADR                                               | Decision                                                            | Status   |
+| ------------------------------------------------- | ------------------------------------------------------------------- | -------- |
+| [0001](0001-multi-repository-strategy.md)         | Use separate repositories for independently deployable applications | Accepted |
+| [0002](0002-initial-event-driven-architecture.md) | Begin with an event-driven polyglot architecture                    | Accepted |
+| [0003](0003-use-rabbitmq-as-message-broker.md)    | Use RabbitMQ as the message broker                                  | Accepted |
 
 ## When to write an ADR
 
