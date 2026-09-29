@@ -395,6 +395,34 @@ The gateway checks its accepted record and the incoming outcome; it does not
 collect the six-stage test fixture. Integration tests must verify the running
 service path and resulting client-visible state.
 
+## Running validation
+
+Use Node.js 24 and npm. From the repository root, install the locked
+dependencies and run the contract suites:
+
+```bash
+npm ci
+npm test
+```
+
+PostgreSQL and RabbitMQ are not required for contract validation. The tests
+read local schemas and fixtures. The GitHub Actions contract workflow uses
+Node.js 24 and runs the same suite in CI mode.
+
+### Troubleshooting
+
+| Symptom | What to check |
+| --- | --- |
+| Shared `$ref` cannot resolve | Use `createContractAjv()` so the shared envelope is registered before compiling concrete schemas. Confirm that the schema `$id` and `$ref` match, including any fragment. |
+| Fixture-registration test fails | Compare saved filenames and registered names; check spelling, missing files, and duplicate entries. |
+| Schema expectation differs | Read the fixture name and Ajv error paths, keywords, and messages. An unexpectedly accepted negative fixture may expose a missing constraint or an incorrectly constructed fixture. |
+| Lifecycle expectation differs | Read the named check and its expected Boolean, then compare the participating records. A passing negative test confirms the expected problem was detected. |
+| Relative file cannot be found | Run tests from the repository root and confirm the referenced file exists. |
+
+Registration checks compare files matching each suite's filename prefix and
+`.json` extension. An unregistered file with an unrecognized prefix can be
+ignored by that check; keep fixture names consistent with their suite.
+
 ## Compatibility during Phase 1
 
 A contract change is incompatible when an application following the previous
@@ -402,18 +430,28 @@ contract could no longer produce or understand the required behavior. Examples
 include:
 
 - Removing required information.
+- Adding required metadata that existing producers do not supply.
 - Renaming an established state, classification, outcome, or failure reason.
 - Changing the meaning of an existing value.
 - Narrowing the accepted battery range.
 - Changing identifier meaning or breaking lifecycle correlation.
+
+Flat messages that place battery fields outside `data`, or use `device_id`
+instead of `source.id`, do not satisfy the submission and event contracts.
+Producers must supply the envelope and payload required by the applicable
+schema. Adding required metadata changes producer expectations and is
+incompatible with producers that do not supply it. HTTP status responses
+retain their separately defined top-level fields.
 
 Clarifying documentation without changing behavior is compatible. Phase 1 does
 not establish a long-term public API-versioning policy.
 
 ## Contract artifacts
 
-Contract artifacts are in `common/` for the shared envelope definition,
-`http/` and `events/` for concrete schemas, and `examples/` for fixtures.
+- [Shared event envelope](common/event-envelope.schema.json)
+- [HTTP schemas](http) and [HTTP fixtures](examples/http)
+- [Event schemas](events) and [event fixtures](examples/events)
+- [Complete lifecycle fixtures](examples/lifecycle)
 
 ## Related decisions
 
