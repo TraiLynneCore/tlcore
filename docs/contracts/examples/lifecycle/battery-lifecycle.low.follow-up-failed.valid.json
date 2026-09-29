@@ -1,0 +1,78 @@
+{
+  "submission": {
+    "event_id": "123e4567-e89b-12d3-a456-426614174000",
+    "event_type": "battery.level_reported",
+    "source": {
+      "id": "sim-device-000",
+      "type": "device"
+    },
+    "occurred_at": "1993-10-10T10:14:00Z",
+    "data": {
+      "battery_percentage": 15
+    }
+  },
+  "acceptance": {
+    "lifecycle_id": "123e4567-e89b-12d3-a456-426614174001",
+    "state": "pending"
+  },
+  "accepted_event": {
+    "lifecycle_id": "123e4567-e89b-12d3-a456-426614174001",
+    "event_id": "123e4567-e89b-12d3-a456-426614174000",
+    "event_type": "battery.level_reported",
+    "source": {
+      "id": "sim-device-000",
+      "type": "device"
+    },
+    "occurred_at": "1993-10-10T10:14:00Z",
+    "data": {
+      "battery_percentage": 15
+    },
+    "created_at": "1993-10-10T10:14:01Z"
+  },
+  "classified_event": {
+    "lifecycle_id": "123e4567-e89b-12d3-a456-426614174001",
+    "event_id": "123e4567-e89b-12d3-a456-426614174002",
+    "original_event_id": "123e4567-e89b-12d3-a456-426614174000",
+    "event_type": "battery.classified",
+    "source": {
+      "id": "sim-device-000",
+      "type": "device"
+    },
+    "occurred_at": "1993-10-10T10:14:00Z",
+    "data": {
+      "battery_percentage": 15,
+      "classification": "low"
+    },
+    "created_at": "1993-10-10T10:14:02Z"
+  },
+  "outcome_event": {
+    "lifecycle_id": "123e4567-e89b-12d3-a456-426614174001",
+    "event_id": "123e4567-e89b-12d3-a456-426614174003",
+    "original_event_id": "123e4567-e89b-12d3-a456-426614174000",
+    "event_type": "battery.workflow_outcome",
+    "source": {
+      "id": "sim-device-000",
+      "type": "device"
+    },
+    "occurred_at": "1993-10-10T10:14:00Z",
+    "data": {
+      "battery_percentage": 15,
+      "classification": "low",
+      "failure_reason": "follow_up_failed",
+      "worker_state": "failed"
+    },
+    "created_at": "1993-10-10T10:14:03Z"
+  },
+  "status": {
+    "lifecycle_id": "123e4567-e89b-12d3-a456-426614174001",
+    "original_event_id": "123e4567-e89b-12d3-a456-426614174000",
+    "event_type": "battery.level_reported",
+    "source": {
+      "id": "sim-device-000",
+      "type": "device"
+    },
+    "occurred_at": "1993-10-10T10:14:00Z",
+    "state": "failed",
+    "failure_reason": "follow_up_failed"
+  }
+}

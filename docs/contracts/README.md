@@ -327,7 +327,7 @@ implemented by later Phase 1 work and are not defined here.
 ## Lifecycle validation
 
 Individual fixtures will verify each service boundary. Planned
-complete fixtures under `examples/lifecycles` will check lifecycle identity,
+complete fixtures under `examples/lifecycle` will check lifecycle identity,
 original-event references, distinct result IDs, source identity/type,
 occurrence time, battery percentage, and final-result consistency.
 
