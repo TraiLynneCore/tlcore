@@ -1,0 +1,32 @@
+name: Contract Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Contract Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v7
+
+      - name: Set Up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Contract Tests
+        run: npm test -- --ci
