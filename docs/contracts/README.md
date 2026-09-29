@@ -1,8 +1,10 @@
 # Phase 1 Service Contracts
 
-**Status:** Planned Phase 1 contract.
+**Status:** Phase 1 schemas and contract tests implemented; service behavior remains planned.
 
-Schemas and Jest validation cover battery submission, acceptance, accepted events, classification events, worker outcomes, and latest-status responses. Run `npm test` from the repository root. Lifecycle validation are still being built.
+Schemas and Jest validation cover battery submission, acceptance, accepted
+events, classification events, worker outcomes, latest-status responses, and
+complete lifecycle examples. Run `npm test` from the repository root.
 
 This document defines the minimum shared behavior for TLCore's first working
 capability. It gives the simulated client, JavaScript gateway, Python
@@ -269,7 +271,7 @@ Failed states use a small fixed set of client-visible reasons:
 
 | Failure reason     | Meaning                                                                                |
 | ------------------ | -------------------------------------------------------------------------------------- |
-| `follow_up_failed` | The classification did not produce a valid workflow outcome                            |
+| `follow_up_failed` | The Ruby worker reported that its simulated follow-up failed                            |
 | `result_rejected`  | The gateway received a workflow result that it could not accept as the completed state |
 
 These reasons describe where the lifecycle stopped without exposing an internal
@@ -319,27 +321,79 @@ Each service validates information when it crosses that service's boundary:
 - A result that cannot be associated with an accepted lifecycle must not change
   an arbitrary lifecycle's state.
 
-Schemas and lifecycle checks will encode these rules. Processor-failure events
-and retry mechanisms are outside this contract.
+Schemas check individual records, and lifecycle tests compare saved records.
+Service tests must verify runtime enforcement of these boundary rules.
+Processor-failure events and retry mechanisms are outside this contract.
 Retry, duplicate-delivery, ordering, and restart-recovery behavior will be
 implemented by later Phase 1 work and are not defined here.
 
 ## Lifecycle validation
 
-Individual fixtures will verify each service boundary. Planned
-complete fixtures under `examples/lifecycle` will check lifecycle identity,
-original-event references, distinct result IDs, source identity/type,
-occurrence time, battery percentage, and final-result consistency.
+The [lifecycle fixtures](examples/lifecycle) collect six named records:
+`submission`, `acceptance`, `accepted_event`, `classified_event`,
+`outcome_event`, and `status`. This object organizes test data; it is not an
+application message or a required production storage format. These examples
+describe terminal workflows, so a pending status after an outcome is
+inconsistent with the example's expected final state.
 
-Positive examples will cover completed and follow-up-failed workflows for all
-three classifications. Semantic negative examples will break one relationship
-while keeping each message schema-valid. Separate rejection and malformed-data
-examples will verify invalid outcomes and safe handling of missing stages or
-nested values. A correctly represented rejected result does not make the
-rejected event valid.
+The [lifecycle helper](../../scripts/helpers/lifecycle-validator.mjs) returns
+14 Boolean checks: structure validity, six individual record-validity checks,
+and seven relationship checks. Relationships cover lifecycle IDs, original-event
+references, distinct event and lifecycle IDs, source ID/type, occurrence time,
+battery percentage, and worker outcome versus final status. Event validation
+also applies the existing identifier-distinctness rules.
 
-These checks will prove contract and example consistency, not live HTTP
-behavior, delivery, persistence, or recovery.
+Schemas establish record validity; relationship helpers compare values.
+Checks run independently, with optional chaining allowing safe access to
+missing or null values. Matching missing values can produce a true comparison
+while schema checks reject the records. A true relationship check alone does
+not establish validity.
+
+The [Jest suite](../../tests/contracts/battery-lifecycle.test.mjs) explicitly
+registers fixtures and their expected check maps. It checks that every matching
+battery lifecycle JSON filename is registered exactly once, verifies result
+and expectation keys, and tests each Boolean separately. Test descriptions
+reflect the expected finding. A passing negative test means the intended
+problem was detected, not that the lifecycle is valid.
+
+The 22 fixtures cover:
+
+- Three completed workflows: normal, low, and critical.
+- Three valid worker-failed workflows with `follow_up_failed`.
+- Ten relationship mismatches whose individual records remain valid.
+- Four malformed structures: missing, extra, null, and array stages.
+- Two malformed nested values: null outcome source and null outcome data.
+
+Completed and correctly reported worker-failed examples expect all 14 checks
+to be true. Negative examples explicitly declare their expected false checks.
+Malformed input does not require every check to fail.
+
+Run the lifecycle suite from the repository root:
+
+```bash
+npm test -- --runTestsByPath tests/contracts/battery-lifecycle.test.mjs --verbose
+```
+
+Run `npm test` for all contract suites. These checks prove contract and saved
+example consistency, not execution order, live HTTP behavior, delivery,
+persistence, retries, duplicate handling, or recovery.
+
+### Gateway rejection coverage
+
+The status-schema suite validates the shape of `failed/result_rejected`
+responses. The lifecycle suite does not implement the gateway's rejection
+decision or model correctly handled rejection scenarios.
+
+When the gateway is implemented, its behavior tests must verify that it:
+
+- Rejects invalid or inconsistent incoming outcomes.
+- Preserves accepted event and source context in rejection responses.
+- Updates only a safely correlated workflow, leaving unrelated workflows unchanged.
+- Persists and returns `failed/result_rejected` when appropriate.
+
+The gateway checks its accepted record and the incoming outcome; it does not
+collect the six-stage test fixture. Integration tests must verify the running
+service path and resulting client-visible state.
 
 ## Compatibility during Phase 1
 
@@ -358,8 +412,8 @@ not establish a long-term public API-versioning policy.
 
 ## Contract artifacts
 
-Planned locations are `common/` for the shared envelope definition, `http/`
-and `events/` for concrete schemas, and `examples/` for fixtures.
+Contract artifacts are in `common/` for the shared envelope definition,
+`http/` and `events/` for concrete schemas, and `examples/` for fixtures.
 
 ## Related decisions
 

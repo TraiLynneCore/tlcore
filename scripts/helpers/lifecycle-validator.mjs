@@ -61,12 +61,12 @@ const checkOriginalEventIdConsistency = (lifecycle) => {
 };
 
 const checkDistinctIds = (lifecycle) => {
-  const a = lifecycle?.acceptance?.lifecycle_id;
-  const b = lifecycle?.submission?.event_id;
-  const c = lifecycle?.classified_event?.event_id;
-  const d = lifecycle?.outcome_event?.event_id;
+  const lifecycleId = lifecycle?.acceptance?.lifecycle_id;
+  const originalEventId = lifecycle?.submission?.event_id;
+  const classifiedEventId = lifecycle?.classified_event?.event_id;
+  const outcomeEventId = lifecycle?.outcome_event?.event_id;
 
-  const ids = [a, b, c, d];
+  const ids = [lifecycleId, originalEventId, classifiedEventId, outcomeEventId];
 
   return ids.length === new Set(ids).size;
 };
