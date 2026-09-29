@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import { readdirSync } from "fs";
 import createContractAjv from "../../scripts/helpers/create-contract-ajv.mjs";
 import loadJson from "../../scripts/helpers/load-json.mjs";
+import createStatusValidator from "../../scripts/helpers/status-validator.mjs";
 
 const fixtureRegistration = [
   {
@@ -180,13 +181,18 @@ const fixtureRegistration = [
     name: "battery-status.with-worker-state.invalid.json",
     expectedValid: false,
   },
+  {
+    name: "battery-status.matching-original-event-and-lifecycle-ids.invalid.json",
+    expectedValid: false,
+  },
 ];
 
 const ajv = createContractAjv();
 const batteryStatusSchema = loadJson(
   "./docs/contracts/http/battery-status.schema.json",
 );
-const validate = ajv.compile(batteryStatusSchema);
+const schemaValidate = ajv.compile(batteryStatusSchema);
+const validate = createStatusValidator(schemaValidate);
 
 describe("Battery status", () => {
   test("every saved fixture is registered exactly once", () => {
@@ -226,5 +232,22 @@ describe("Battery status", () => {
           `Details: ${details}`,
       );
     }
+  });
+
+  test("matching IDs pass the schema but fail the identity check", () => {
+    const data = loadJson(
+      "./docs/contracts/examples/http/battery-status/battery-status.matching-original-event-and-lifecycle-ids.invalid.json",
+    );
+
+    expect(schemaValidate(data)).toBe(true);
+    expect(validate(data)).toBe(false);
+    expect(validate.errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          instancePath: "/original_event_id",
+          keyword: "distinctIdentifiers",
+        }),
+      ]),
+    );
   });
 });

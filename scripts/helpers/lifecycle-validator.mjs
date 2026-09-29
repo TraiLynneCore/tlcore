@@ -1,6 +1,7 @@
 import createContractAjv from "./create-contract-ajv.mjs";
 import createEventValidator from "./event-validator.mjs";
 import loadJson from "./load-json.mjs";
+import createStatusValidator from "./status-validator.mjs";
 
 const checkStructure = (lifecycle) => {
   if (
@@ -158,8 +159,8 @@ export default function createLifecycleValidator() {
       loadJson("./docs/contracts/events/outcome-battery-event.schema.json"),
     ),
   );
-  const validateStatus = ajv.compile(
-    loadJson("./docs/contracts/http/battery-status.schema.json"),
+  const validateStatus = createStatusValidator(
+    ajv.compile(loadJson("./docs/contracts/http/battery-status.schema.json")),
   );
 
   return function validateLifecycle(lifecycle) {

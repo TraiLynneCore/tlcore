@@ -102,6 +102,10 @@ returns an object following
 be `pending`, `completed`, or `failed`; their required details and meanings are
 defined in [Client-visible states](#client-visible-states).
 
+Status validation combines JSON Schema validation with a separate identifier
+check: `original_event_id` must differ from `lifecycle_id`. Both standalone
+status tests and lifecycle validation apply this check.
+
 ## Event contracts
 
 ### Accepted battery event
@@ -340,8 +344,8 @@ The [lifecycle helper](../../scripts/helpers/lifecycle-validator.mjs) returns
 14 Boolean checks: structure validity, six individual record-validity checks,
 and seven relationship checks. Relationships cover lifecycle IDs, original-event
 references, distinct event and lifecycle IDs, source ID/type, occurrence time,
-battery percentage, and worker outcome versus final status. Event validation
-also applies the existing identifier-distinctness rules.
+battery percentage, and worker outcome versus final status. Event and status
+validation also apply their identifier-distinctness rules.
 
 Schemas establish record validity; relationship helpers compare values.
 Checks run independently, with optional chaining allowing safe access to
